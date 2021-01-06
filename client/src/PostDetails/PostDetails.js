@@ -6,7 +6,7 @@ import { Loader } from '../Loader';
 const PostDetails = ({ match }) => {
   const [post, setPost] = useState([]);
 
-  const url = `http://localhost:3000/api/posts/${match.params._id}`
+  const url = `/api/posts/${match.params._id}`
   const content = Loader(url)
 
   console.log(content)

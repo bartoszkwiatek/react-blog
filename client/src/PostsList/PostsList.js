@@ -9,7 +9,7 @@ const PostsList = ({ match }) => {
   const [items, setItems] = useState([]);
   console.log(`match url:${match.url}`)
   useEffect(() => {
-    fetch("http://localhost:3000/api/posts")
+    fetch("/api/posts")
       .then(res => res.json())
       .then(
         (result) => {
