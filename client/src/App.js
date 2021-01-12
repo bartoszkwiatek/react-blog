@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route, Switch } from "react-router-dom"
 import './App.css';
 import { PostsList } from './PostsList/PostsList';
 import { PostDetails } from './PostDetails/PostDetails';
+import { Profile } from './Profile/Profile';
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
           <Switch>
             <Route path="/posts/:_id" component={PostDetails}></Route>
             <Route exact path="/admin">
-              {/* <Admin /> */}
+              <Profile />
             </Route>
             <Route exact path="/" component={PostsList}></Route>
           </Switch>

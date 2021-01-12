@@ -7,7 +7,6 @@ const PostsList = ({ match }) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  console.log(`match url:${match.url}`)
   useEffect(() => {
     fetch("/api/posts")
       .then(res => res.json())
