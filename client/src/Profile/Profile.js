@@ -1,17 +1,55 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, ButtonGroup, Container, Input, Text, Textarea } from "@chakra-ui/react"
+import { Box, Button, ButtonGroup, Container, Flex, IconButton, Input, Spacer, Text, Textarea } from "@chakra-ui/react"
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom"
+import { CheckIcon, AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons'
 
 
 const Profile = ({ match }) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  const [postTitle, setPostTitle] = useState(null)
-  const [longContent, setLongContent] = useState(null)
+  const [postTitle, setPostTitle] = useState("")
+  const [longContent, setLongContent] = useState("")
 
   const handleTitleChange = (event) => setPostTitle(event.target.value)
   const handleContentChange = (event) => setLongContent(event.target.value)
+  const postData = async (url, data) => {
+    const response = await fetch(url, {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      headers: {
+        'Content-Type': 'application/json',
+        // 'Authorization': `Basic ${this.accessToken}`,
+        'Authorization': `Basic YWRtaW5AYWRtaW4uY29tOmFkbWlu`,
+      },
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  }
+
+  const deletePost = async (url) => {
+    const response = await fetch(url, {
+      method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        // 'Authorization': `Basic ${this.accessToken}`,
+        'Authorization': `Basic YWRtaW5AYWRtaW4uY29tOmFkbWlu`,
+      },
+      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+  }
+
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
+  const newPost = {
+    title: postTitle,
+    shortContent: longContent.slice(0, 120),
+    longContent: longContent,
+  }
+
 
 
   useEffect(() => {
@@ -40,17 +78,31 @@ const Profile = ({ match }) => {
       <React.Fragment>
         <Container maxW="xl" centerContent>
           <Input
+            isRequired
             value={postTitle}
             onChange={handleTitleChange}
             placeholder="Title of new post"
             size="md"
           />
           <Textarea
+            isRequired
             value={longContent}
             onChange={handleContentChange}
             placeholder="Post content"
             size="md"
             resize="vertical"
+          />
+          <IconButton
+            disabled={!postTitle || !longContent}
+            onClick={() => {
+              postData("/api/posts", newPost)
+              refreshPage()
+            }}
+            variant="outline"
+            colorScheme="teal"
+            aria-label="save"
+            fontSize="20px"
+            icon={< AddIcon />}
           />
         </Container>
         <Container maxW="xl" centerContent>
@@ -66,16 +118,47 @@ const Profile = ({ match }) => {
               padding="1"
               border="1px"
               borderRadius="sm"
-              key={item._id}>
-              {/* <Link to={`/posts/${item._id}`} > */}
-              <li >
-                <h2>
-                  {item.title}
-                </h2>
-                <p>
-                  {item.shortContent}
-                </p>
-              </li>
+              key={item._id}
+            >
+              <Flex
+                align="center">
+                <Box
+                  margin="1"
+                  padding="1"
+                >
+                  <h2>
+                    {item.title}
+                  </h2>
+                  <p>
+                    {item.shortContent}
+                  </p>
+                </Box>
+                <Spacer />
+                <ButtonGroup
+                  variant="outline"
+                  fontSize="20"
+                  spacing="2"
+                >
+                  <IconButton
+                    onClick={() => {
+                      alert('Nothing happened!')
+                    }}
+                    colorScheme="teal"
+                    aria-label="delete"
+                    icon={< EditIcon />}
+                  />
+                  <IconButton
+                    onClick={() => {
+                      deletePost(`api/posts/${item._id}`)
+                      refreshPage()
+                    }}
+                    colorScheme="red"
+                    aria-label="delete"
+                    icon={< DeleteIcon />}
+                  />
+                </ButtonGroup>
+              </Flex>
+
               {/* </Link> */}
             </Box>
           ))}

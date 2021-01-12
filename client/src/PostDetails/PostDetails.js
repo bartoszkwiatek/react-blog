@@ -20,7 +20,7 @@ const PostDetails = ({ match }) => {
         borderRadius="md">
         <h2>{content.title}</h2>
         <h6>{content.createdAt}</h6>
-        <p>{content.longContent}</p>
+        <p style={{ whiteSpace: "pre-wrap" }}>{content.longContent}</p>
         <Link to={`/`}>Back</Link>
       </Box>
 
