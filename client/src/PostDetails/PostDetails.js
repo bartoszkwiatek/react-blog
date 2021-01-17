@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, ButtonGroup, Container } from "@chakra-ui/react"
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom"
+import { Box } from "@chakra-ui/react";
+import React from 'react';
+import { Link } from "react-router-dom";
 import { Loader } from '../Loader';
 
+
 const PostDetails = ({ match }) => {
-  const [post, setPost] = useState([]);
+  console.log(`${match.url}`)
 
   const url = `/api/posts/${match.params._id}`
   const content = Loader(url)
@@ -23,11 +24,8 @@ const PostDetails = ({ match }) => {
         <p style={{ whiteSpace: "pre-wrap" }}>{content.longContent}</p>
         <Link to={`/`}>Back</Link>
       </Box>
-
     </React.Fragment>
   )
 }
 
-
-
-export { PostDetails }
+export default PostDetails

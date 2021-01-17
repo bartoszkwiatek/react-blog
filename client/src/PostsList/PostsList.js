@@ -1,12 +1,13 @@
+import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
-import { Box, Button, ButtonGroup, Container } from "@chakra-ui/react"
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom"
+import { Link } from "react-router-dom";
 
 
 const PostsList = ({ match }) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
+
   useEffect(() => {
     fetch("/api/posts")
       .then(res => res.json())
@@ -33,7 +34,6 @@ const PostsList = ({ match }) => {
     return (
       <ul>
         {items.map(item => (
-          // <Link to={`/post/${item._id}`} key={item._id}>
           <Box
             margin="4"
             padding="2"
@@ -41,9 +41,10 @@ const PostsList = ({ match }) => {
             border="1px"
             borderRadius="md"
             key={item._id}>
-            <Link to={`${match.url}posts/${item._id}`} >
+            <Link to={`${match.url}posts/${item._id}`}>
               <li >
                 <h2>
+
                   {item.title}
                 </h2>
                 <p>
@@ -58,4 +59,4 @@ const PostsList = ({ match }) => {
   }
 }
 
-export { PostsList }
+export default PostsList

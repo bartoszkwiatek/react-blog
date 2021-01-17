@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, ButtonGroup, Container } from "@chakra-ui/react"
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom"
+import { useEffect, useState } from 'react';
 
 
 const Loader = (url) => {
@@ -24,7 +22,7 @@ const Loader = (url) => {
           setError(error);
         }
       )
-  }, [])
+  }, [url])
 
   if (error) {
     return error.message
@@ -34,4 +32,4 @@ const Loader = (url) => {
     return items
   }
 }
-export { Loader }
+export { Loader };

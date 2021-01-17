@@ -1,7 +1,6 @@
+import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { Box, ButtonGroup, Container, Flex, IconButton, Input, Spacer, Text, Textarea } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
-import { Box, Button, ButtonGroup, Container, Flex, IconButton, Input, Spacer, Text, Textarea } from "@chakra-ui/react"
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom"
-import { CheckIcon, AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons'
 
 
 const Profile = ({ match }) => {
@@ -168,4 +167,4 @@ const Profile = ({ match }) => {
   }
 }
 
-export { Profile }
+export default Profile;
