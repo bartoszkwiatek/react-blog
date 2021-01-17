@@ -14,13 +14,13 @@ import history from './utils/history';
 
 
 
-const PrivateRoute = ({ component: Component, auth }) => (
-  <Route render={props => auth === true
-    ? <Component auth={auth} {...props} />
-    : <Redirect to={{ pathname: '/' }} />
-  }
-  />
-)
+// const PrivateRoute = ({ component: Component, auth }) => (
+//   <Route render={props => auth === true
+//     ? <Component auth={auth} {...props} />
+//     : <Redirect to={{ pathname: '/' }} />
+//   }
+//   />
+// )
 
 
 
@@ -35,23 +35,23 @@ const Routes = () => {
         <br />
         <div>
           <Switch>
-            <Route exact path='/' component={Home} />
             <Route path='/posts/:_id' component={PostDetails}></Route>
+            <Route exact path='/' component={Home} />
             <Route path='/profile' component={Profile} />
 
             {/* <Route path='/hooksform' component={HooksForm} /> */}
             {/* <Route path='/hookscontainer' component={HooksContainer1} /> */}
             {/* <Route path='/authcheck' component={AuthCheck} /> */}
 
-            <PrivateRoute path='/privateroute'
+            {/* <PrivateRoute path='/privateroute'
               auth={context.authState}
               component={PrivateComponent} />
             <PrivateRoute path="/profile"
               auth={context.authState}
-              component={Profile} />
+              component={Profile} /> */}
             <Route path='/callback'
               render={(props) => {
-                context.handleAuth(props); return <Callback />
+                // context.handleAuth(props); return <Callback />
               }} />
 
           </Switch>
