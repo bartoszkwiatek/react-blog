@@ -8,9 +8,10 @@ const PostDetails = ({ match }) => {
   console.log(`${match.url}`)
 
   const url = `/api/posts/${match.params._id}`
+
+  console.log(url)
   const content = Loader(url)
 
-  console.log(content)
   return (
     <React.Fragment>
       <Box

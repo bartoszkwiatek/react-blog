@@ -1,9 +1,15 @@
 import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, ButtonGroup, Container, Flex, IconButton, Input, Spacer, Text, Textarea } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import { Container as StrapContainer, Row, Col } from "reactstrap";
+import Highlight from '../Highlight';
+import Loading from '../Loading';
 
 
 const Profile = ({ match }) => {
+  const { user } = useAuth0();
+
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
@@ -75,6 +81,24 @@ const Profile = ({ match }) => {
   } else {
     return (
       <React.Fragment>
+        <StrapContainer className="mb-5">
+          <Row className="align-items-center profile-header mb-5 text-center text-md-left">
+            <Col md={2}>
+              <img
+                src={user.picture}
+                alt="Profile"
+                className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
+              />
+            </Col>
+            <Col md>
+              <h2>{user.name}</h2>
+              <p className="lead text-muted">{user.email}</p>
+            </Col>
+          </Row>
+          <Row>
+            <Highlight>{JSON.stringify(user, null, 2)}</Highlight>
+          </Row>
+        </StrapContainer>
         <Container maxW="xl" centerContent>
           <Input
             isRequired
@@ -167,4 +191,6 @@ const Profile = ({ match }) => {
   }
 }
 
-export default Profile;
+export default withAuthenticationRequired(Profile, {
+  onRedirecting: () => <Loading />,
+});

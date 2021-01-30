@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Redirect, Route, Router, Switch } from 'react-router';
+import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 // import HooksContainer1 from './hooks/hook1';
 import Callback from './Callback/Callback';
 import Header from './Header/Header';
@@ -10,6 +10,8 @@ import PrivateComponent from './PrivateComponents/PrivateComponent';
 import Profile from './Profile/Profile';
 import Context from './utils/context';
 import history from './utils/history';
+import ExternalApi from './ExternalApi/ExternalApi'
+import NavBar from './Header/NavBar'
 
 
 
@@ -30,14 +32,18 @@ const Routes = () => {
 
   return (
     <div>
-      <Router history={history} >
+      <Router history={history}>
+
         <Header />
+        <NavBar />
+
         <br />
         <div>
           <Switch>
-            <Route path='/posts/:_id' component={PostDetails}></Route>
             <Route exact path='/' component={Home} />
+            <Route path='/posts/:_id' component={PostDetails}></Route>
             <Route path='/profile' component={Profile} />
+            <Route path="/external-api" component={ExternalApi} />
 
             {/* <Route path='/hooksform' component={HooksForm} /> */}
             {/* <Route path='/hookscontainer' component={HooksContainer1} /> */}

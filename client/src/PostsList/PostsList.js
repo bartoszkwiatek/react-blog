@@ -41,6 +41,7 @@ const PostsList = ({ match }) => {
             border="1px"
             borderRadius="md"
             key={item._id}>
+            {`${match.url}posts/${item._id}`}
             <Link to={`${match.url}posts/${item._id}`}>
               <li >
                 <h2>

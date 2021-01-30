@@ -16,25 +16,6 @@ const Header = () => {
           </header>
         </Link>
       </Box>
-      <nav>
-        <HStack spacing="4">
-          <Link to='/'>
-            <Button colorScheme="teal" size="lg">Home</Button>
-          </Link>
-          <Link to='/profile'>
-            <Button colorScheme="teal" size="lg">Profile</Button>
-          </Link>
-          <Link to='/privateroute'>
-            <Button colorScheme="teal" size="lg">Private Route</Button>
-          </Link>
-          {
-            !context.authState
-              ? <Button onClick={() => context.authObj.login()}>Login</Button>
-              : <Button onClick={() => context.authObj.logout()}>Logout</Button>
-          }
-        </HStack>
-      </nav>
-
     </Container>
   )
 };

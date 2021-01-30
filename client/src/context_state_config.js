@@ -6,6 +6,7 @@ import * as ACTIONS from './store/actions/actions';
 import * as AuthReducer from './store/reducers/auth_reducer';
 import * as FormReducer from './store/reducers/form_reducer';
 import Routes from './Routes';
+import { useAuth0 } from "@auth0/auth0-react";
 
 // import Auth from './utils/auth';
 
@@ -85,37 +86,35 @@ const ContextState = () => {
 
 
   return (
-    <React.Fragment>
+    <Context.Provider
+      value={{
+        //Reducer1
+        // stateProp1: stateReducer1.stateprop1,
+        // stateProp2: stateReducer1.stateprop2,
+        // dispatchContextTrue: () => handleDispatchTrue(),
+        // dispatchContextFalse: () => handleDispatchFalse(),
 
-      <Context.Provider
-        value={{
-          //Reducer1
-          // stateProp1: stateReducer1.stateprop1,
-          // stateProp2: stateReducer1.stateprop2,
-          // dispatchContextTrue: () => handleDispatchTrue(),
-          // dispatchContextFalse: () => handleDispatchFalse(),
+        //Form Reducer
+        useContextChangeState: stateFormReducer.user_textChange,
+        useContextSubmitState: stateFormReducer.user_textSubmit,
+        useContextSubmit: (event) => handleFormSubmit(event),
+        useContextChange: (event) => handleFormChange(event),
 
-          //Form Reducer
-          useContextChangeState: stateFormReducer.user_textChange,
-          useContextSubmitState: stateFormReducer.user_textSubmit,
-          useContextSubmit: (event) => handleFormSubmit(event),
-          useContextChange: (event) => handleFormChange(event),
+        //Auth Reducer
+        authState: stateAuthReducer.is_authenticated,
+        profileState: stateAuthReducer.profile,
+        handleUserLogin: () => handleLogin(),
+        handleUserLogout: () => handleLogout(),
+        handleUserAddProfile: (profile) => handleAddProfile(profile),
+        handleUserRemoveProfile: () => handleRemoveProfile(),
 
-          //Auth Reducer
-          authState: stateAuthReducer.is_authenticated,
-          profileState: stateAuthReducer.profile,
-          handleUserLogin: () => handleLogin(),
-          handleUserLogout: () => handleLogout(),
-          handleUserAddProfile: (profile) => handleAddProfile(profile),
-          handleUserRemoveProfile: () => handleRemoveProfile(),
+        //Handle auth
+        handleAuth: (props) => handleAuthentication(props),
+        // authObj: auth
+      }}>
+      <Routes />
 
-          //Handle auth
-          handleAuth: (props) => handleAuthentication(props),
-          // authObj: auth
-        }}>
-        <Routes />
-      </Context.Provider>
-    </React.Fragment>
+    </Context.Provider>
 
   )
 }
