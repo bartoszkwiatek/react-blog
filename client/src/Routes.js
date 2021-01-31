@@ -12,6 +12,7 @@ import Context from './utils/context';
 import history from './utils/history';
 import ExternalApi from './ExternalApi/ExternalApi'
 import NavBar from './Header/NavBar'
+import { Container } from '@chakra-ui/react';
 
 
 
@@ -31,39 +32,37 @@ const Routes = () => {
 
 
   return (
-    <div>
-      <Router history={history}>
+    <Router history={history}>
+      <Container className="App">
 
         <Header />
         <NavBar />
 
         <br />
-        <div>
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/posts/:_id' component={PostDetails}></Route>
-            <Route path='/profile' component={Profile} />
-            <Route path="/external-api" component={ExternalApi} />
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/posts/:_id' component={PostDetails}></Route>
+          <Route path='/profile' component={Profile} />
+          <Route path="/external-api" component={ExternalApi} />
 
-            {/* <Route path='/hooksform' component={HooksForm} /> */}
-            {/* <Route path='/hookscontainer' component={HooksContainer1} /> */}
-            {/* <Route path='/authcheck' component={AuthCheck} /> */}
+          {/* <Route path='/hooksform' component={HooksForm} /> */}
+          {/* <Route path='/hookscontainer' component={HooksContainer1} /> */}
+          {/* <Route path='/authcheck' component={AuthCheck} /> */}
 
-            {/* <PrivateRoute path='/privateroute'
+          {/* <PrivateRoute path='/privateroute'
               auth={context.authState}
               component={PrivateComponent} />
             <PrivateRoute path="/profile"
               auth={context.authState}
               component={Profile} /> */}
-            <Route path='/callback'
-              render={(props) => {
-                // context.handleAuth(props); return <Callback />
-              }} />
+          <Route path='/callback'
+            render={(props) => {
+              // context.handleAuth(props); return <Callback />
+            }} />
 
-          </Switch>
-        </div>
-      </Router>
-    </div>
+        </Switch>
+      </Container>
+    </Router>
   )
 }
 

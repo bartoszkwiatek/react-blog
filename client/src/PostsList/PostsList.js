@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
+import Loading from "../Loading";
 
 
 const PostsList = ({ match }) => {
@@ -29,19 +30,18 @@ const PostsList = ({ match }) => {
   if (error) {
     return <div>Error: {error.message}</div>
   } else if (!isLoaded) {
-    return <div>Loading...</div>
+    return <Loading></Loading>
   } else {
     return (
       <ul>
         {items.map(item => (
           <Box
-            margin="4"
+            marginBottom="5"
             padding="2"
             bg="gray.100"
             border="1px"
             borderRadius="md"
             key={item._id}>
-            {`${match.url}posts/${item._id}`}
             <Link to={`${match.url}posts/${item._id}`}>
               <li >
                 <h2>
