@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Alert } from "reactstrap";
+import { Button, Alert } from "@chakra-ui/react";
 import Highlight from '../Highlight';
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import config from "../auth_config.json";

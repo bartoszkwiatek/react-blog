@@ -33,9 +33,9 @@ const Routes = () => {
 
   return (
     <Router history={history}>
+      <Header />
       <Container className="App">
 
-        <Header />
         <NavBar />
 
         <br />

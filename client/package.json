@@ -5,7 +5,7 @@
   "dependencies": {
     "@auth0/auth0-react": "^1.2.0",
     "@chakra-ui/icons": "^1.0.0",
-    "@chakra-ui/react": "^1.0.0",
+    "@chakra-ui/react": "^1.2.1",
     "@chakra-ui/theme-tools": "^1.0.0",
     "@emotion/react": "^11.1.1",
     "@emotion/styled": "^11.0.0",
@@ -22,7 +22,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3"
-    },
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build --prod",

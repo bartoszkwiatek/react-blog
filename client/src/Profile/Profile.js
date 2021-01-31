@@ -2,7 +2,7 @@ import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import { Box, ButtonGroup, Container, Flex, IconButton, Input, Spacer, Text, Textarea } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
-import { Container as StrapContainer, Row, Col } from "reactstrap";
+import { Container as StrapContainer, Row, Col } from "@chakra-ui/react";
 import Highlight from '../Highlight';
 import Loading from '../Loading';
 
