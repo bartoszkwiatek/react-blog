@@ -1,7 +1,9 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import Loading from "../Loading";
+import { format, formatDistance, formatRelative, subDays } from 'date-fns'
+
 
 
 const PostsList = ({ match }) => {
@@ -35,25 +37,31 @@ const PostsList = ({ match }) => {
     return (
       <ul>
         {items.map(item => (
-          <Box
+          <LinkBox
+            key={item._id}
+            as="article"
+            p="5"
             marginBottom="5"
-            padding="2"
-            bg="gray.100"
-            border="1px"
-            borderRadius="md"
-            key={item._id}>
-            <Link to={`${match.url}posts/${item._id}`}>
-              <li >
-                <h2>
-
+            borderWidth="1px"
+            rounded="md"
+          >
+            <Link
+              to={`${match.url}posts/${item._id}`}
+            >
+              <Box as="time" dateTime={item.createdAt}>
+                {format(new Date(item.createdAt), "dd-MM-yyyy HH:mm")}
+              </Box>
+              <Heading size="md" my="2">
+                <LinkOverlay href="#">
                   {item.title}
-                </h2>
-                <p>
-                  {item.shortContent}
-                </p>
-              </li>
+                </LinkOverlay>
+              </Heading>
+              <Text>
+                {item.shortContent}
+              </Text>
             </Link>
-          </Box>
+          </LinkBox>
+
         ))}
       </ul>
     )
