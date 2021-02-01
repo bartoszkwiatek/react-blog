@@ -48,47 +48,8 @@ const NavBar = () => {
               <Button colorScheme="teal" size="lg">External API</Button>
             </Link>
           )}
-          {!isAuthenticated && (
-            <Link>
-              <Button
-                id="qsLoginBtn"
-                color="primary"
-                className="btn-margin"
-                onClick={() => loginWithRedirect()}
-              >
-                Log in
-                  </Button>
-            </Link>
-          )}
-          {isAuthenticated && (
-            <Box nav inNavbar>
-              <Box nav caret id="profileDropDown">
-                <img
-                  src={user.picture}
-                  alt="Profile"
-                  className="nav-user-profile rounded-circle"
-                  width="50"
-                />
-              </Box>
-              <Box>
-                <Box header>{user.name}</Box>
-                <Box
-                  to="/profile"
-                  className="dropdown-profile"
-                  activeClassName="router-link-exact-active"
-                >
-                  <FontAwesomeIcon icon="user" className="mr-3" /> Profile
-                    </Box>
-                <Box
-                  id="qsLogoutBtn"
-                  onClick={() => logoutWithRedirect()}
-                >
-                  <FontAwesomeIcon icon="power-off" className="mr-3" /> Log
-                      out
-                    </Box>
-              </Box>
-            </Box>
-          )}
+
+
         </HStack>
       </nav>
       {/* 
