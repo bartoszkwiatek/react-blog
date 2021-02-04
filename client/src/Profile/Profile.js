@@ -1,9 +1,10 @@
-import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { Box, ButtonGroup, Container, Flex, IconButton, Input, Spacer, Table, Text, Textarea, Th, Tr } from "@chakra-ui/react";
-import React, { useEffect, useState } from 'react';
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
+import { Box, Button, ButtonGroup, Container, Flex, HStack, IconButton, Input, Spacer, Tab, Table, TabList, TabPanel, TabPanels, Tabs, Text, Textarea, Th, Tr, VStack } from "@chakra-ui/react";
+import React, { useEffect, useState } from 'react';
 import Highlight from '../Highlight';
 import Loading from '../Loading';
+
 
 
 const Profile = ({ match }) => {
@@ -80,111 +81,120 @@ const Profile = ({ match }) => {
   } else {
     return (
       <React.Fragment>
-        <Table variant="simple">
-          <Th className="align-items-center profile-header mb-5 text-center text-md-left">
-            <Tr md={2}>
+
+        <Tabs variant="line" colorScheme="teal">
+          <TabList>
+            <Tab>Profile</Tab>
+            <Tab>New post</Tab>
+            <Tab>Posts list</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
               <img
                 src={user.picture}
                 alt="Profile"
                 className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
               />
-            </Tr>
-            <Tr md>
               <h2>{user.name}</h2>
               <p className="lead text-muted">{user.email}</p>
-            </Tr>
-          </Th>
-          <Th>
-            <Highlight>{JSON.stringify(user, null, 2)}</Highlight>
-          </Th>
-        </Table>
-        <Container maxW="xl" centerContent>
-          <Input
-            isRequired
-            value={postTitle}
-            onChange={handleTitleChange}
-            placeholder="Title of new post"
-            size="md"
-          />
-          <Textarea
-            isRequired
-            value={longContent}
-            onChange={handleContentChange}
-            placeholder="Post content"
-            size="md"
-            resize="vertical"
-          />
-          <IconButton
-            disabled={!postTitle || !longContent}
-            onClick={() => {
-              postData("/api/posts", newPost)
-              refreshPage()
-            }}
-            variant="outline"
-            colorScheme="teal"
-            aria-label="save"
-            fontSize="20px"
-            icon={< AddIcon />}
-          />
-        </Container>
-        <Container maxW="xl" centerContent>
-          <Text mb="8px">{postTitle}</Text>
-          <Text mb="8px" style={{ whiteSpace: "pre-wrap" }}>{longContent}</Text>
-        </Container>
+              <Highlight>{JSON.stringify(user, null, 2)}</Highlight>
+            </TabPanel>
+            <TabPanel>
+              <VStack
+                spacing={2}
+                align="flex-end"
+              >
 
-
-        <ul>
-          {items.map(item => (
-            <Box
-              margin="1"
-              padding="1"
-              border="1px"
-              borderRadius="sm"
-              key={item._id}
-            >
-              <Flex
-                align="center">
-                <Box
-                  margin="1"
-                  padding="1"
-                >
-                  <h2>
-                    {item.title}
-                  </h2>
-                  <p>
-                    {item.shortContent}
-                  </p>
-                </Box>
-                <Spacer />
-                <ButtonGroup
+                <Input
+                  isRequired
+                  value={postTitle}
+                  onChange={handleTitleChange}
+                  placeholder="Title of new post"
+                  size="lg"
+                />
+                <Textarea
+                  isRequired
+                  value={longContent}
+                  onChange={handleContentChange}
+                  placeholder="Post content"
+                  size="md"
+                  resize="vertical"
+                  height="200px"
+                />
+                <Button
+                  disabled={!postTitle || !longContent}
+                  onClick={() => {
+                    postData("/api/posts", newPost)
+                    refreshPage()
+                  }}
                   variant="outline"
-                  fontSize="20"
-                  spacing="2"
-                >
-                  <IconButton
-                    onClick={() => {
-                      alert('Nothing happened!')
-                    }}
-                    colorScheme="teal"
-                    aria-label="delete"
-                    icon={< EditIcon />}
-                  />
-                  <IconButton
-                    onClick={() => {
-                      deletePost(`api/posts/${item._id}`)
-                      refreshPage()
-                    }}
-                    colorScheme="red"
-                    aria-label="delete"
-                    icon={< DeleteIcon />}
-                  />
-                </ButtonGroup>
-              </Flex>
+                  colorScheme="teal"
+                  aria-label="save"
+                  rightIcon={< AddIcon />}
+                >Add</Button>
+                <Container>
+                  <Text mb="8px">{postTitle}</Text>
+                  <Text mb="8px" style={{ whiteSpace: "pre-wrap" }}
+                    dangerouslySetInnerHTML={{ __html: `${longContent}` }}
+                  ></Text>
+                </Container>
+              </VStack>
+            </TabPanel>
+            <TabPanel>
+              <ul>
+                {items.map(item => (
+                  <Box
+                    margin="1"
+                    padding="1"
+                    border="1px"
+                    borderRadius="sm"
+                    key={item._id}
+                  >
+                    <Flex
+                      align="center">
+                      <Box
+                        margin="1"
+                        padding="1"
+                      >
+                        <h2>
+                          {item.title}
+                        </h2>
+                        <p>
+                          {item.shortContent}
+                        </p>
+                      </Box>
+                      <Spacer />
+                      <ButtonGroup
+                        variant="outline"
+                        fontSize="20"
+                        spacing="2"
+                      >
+                        <IconButton
+                          onClick={() => {
+                            alert('Nothing happened!')
+                          }}
+                          colorScheme="teal"
+                          aria-label="delete"
+                          icon={< EditIcon />}
+                        />
+                        <IconButton
+                          onClick={() => {
+                            deletePost(`api/posts/${item._id}`)
+                            refreshPage()
+                          }}
+                          colorScheme="red"
+                          aria-label="delete"
+                          icon={< DeleteIcon />}
+                        />
+                      </ButtonGroup>
+                    </Flex>
 
-              {/* </Link> */}
-            </Box>
-          ))}
-        </ul>
+                  </Box>
+                ))}
+              </ul>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </React.Fragment>
     )
   }
