@@ -10,14 +10,15 @@ const PostsList = ({ match }) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
+  console.log(error, isLoaded, items)
 
   useEffect(() => {
     fetch("/api/posts")
       .then(res => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
           setItems(result);
+          setIsLoaded(true);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -56,8 +57,10 @@ const PostsList = ({ match }) => {
                   {item.title}
                 </LinkOverlay>
               </Heading>
-              <Text>
-                {item.shortContent}
+              <Text
+                style={{ whiteSpace: "pre-wrap" }}
+                dangerouslySetInnerHTML={{ __html: `${item.shortContent}... <b>read more</b>` }}
+              >
               </Text>
             </Link>
           </LinkBox>

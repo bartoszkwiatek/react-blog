@@ -1,40 +1,69 @@
-import { Box } from "@chakra-ui/react";
-import React from 'react';
+import { Box, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
+import { format } from 'date-fns';
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { Loader } from '../Loader';
 import Loading from "../Loading";
 
-
 const PostDetails = ({ match }) => {
-  console.log(`${match.url}`)
+  console.log(`${match.url}`);
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [content, setContent] = useState([]);
+  const url = `/api/posts/${match.params._id}`;
 
-  const url = `/api/posts/${match.params._id}`
+  console.log(error, isLoaded, content)
+  useEffect(() => {
+    fetch(url)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setContent(result);
+          setIsLoaded(true);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+  }, [])
 
-  console.log(url)
-  const content = Loader(url)
-  console.log(content)
-  return (
-    <React.Fragment>
+  if (error) {
+    return <div>Error: {error.message}</div>
+  } else if (!isLoaded) {
+    return <Loading></Loading>
+  } else {
+    return (
+      <LinkBox
+        as="article"
+        p="5"
+        marginBottom="5"
+        borderWidth="1px"
+        rounded="md"
+      >
 
-      <Box
-        margin="0"
-        padding="2"
-        bg="gray.100"
-        border="1px"
-        borderRadius="md">
-        {content == 'loading' && (
-          <Loading>
+        <Box as="time" dateTime={content.createdAt}>
+          {format(new Date(content.createdAt), "dd-MM-yyyy HH:mm")}
 
-          </Loading>
-
-        )}
-        <h2>{content.title}</h2>
-        <h6>{content.createdAt}</h6>
-        <p style={{ whiteSpace: "pre-wrap" }}>{content.longContent}</p>
+        </Box>
+        <Heading size="md" my="2">
+          <LinkOverlay href="#">
+            {content.title}
+          </LinkOverlay>
+        </Heading>
+        <Text
+          style={{ whiteSpace: "pre-wrap" }}
+          dangerouslySetInnerHTML={{ __html: `${content.longContent}` }}
+        >
+        </Text>
         <Link to={`/`}>Back</Link>
-      </Box>
-    </React.Fragment>
-  )
-}
 
-export default PostDetails
+      </LinkBox>
+    )
+  }
+};
+
+export default PostDetails;
