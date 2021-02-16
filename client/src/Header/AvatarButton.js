@@ -39,13 +39,15 @@ const AvatarButton = () => {
 
       {
         isAuthenticated && (
-          <Menu>
+          <Menu
+            positon="absolute"
+          >
             <MenuButton
               as={Button}
               colorScheme="teal"
               height="auto"
               width="auto"
-              p={2}
+              p={0}
               borderRadius="100%">
               <Avatar
                 size="md"

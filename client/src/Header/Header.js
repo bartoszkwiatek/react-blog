@@ -24,29 +24,25 @@ const Header = () => {
           <Heading as="h1" size="md" >
             <Flex
               align="center">
-
               <Link
                 to='/'
                 color="white"
               >
                 <Text
-
                   color="white"
                 >
                   Greatest react blog ever
-
                 </Text>
               </Link>
-
               <Spacer />
-              <AvatarButton></AvatarButton>
-
+              <AvatarButton
+              ></AvatarButton>
             </Flex>
           </Heading>
         </Container>
       </Box>
       <Box
-        height="20em"
+        height="14em"
         marginBottom={3}
       >
 
