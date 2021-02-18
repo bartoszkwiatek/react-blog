@@ -37,6 +37,7 @@ const PostDetails = ({ match }) => {
     return <Loading></Loading>
   } else {
     return (
+      //turn into article
       <LinkBox
         as="article"
         p="5"
