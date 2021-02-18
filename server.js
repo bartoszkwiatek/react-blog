@@ -2,6 +2,7 @@ const PORT = process.env.PORT || 3001;
 
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 
 const app = express();
@@ -14,7 +15,9 @@ if (process.env.ENV === 'dev') {
 }
 
 
-const uri = "mongodb+srv://admin:abcdefg@cluster0.aamaa.mongodb.net/mernblogdatabase?retryWrites=true&w=majority";
+
+//temporary password until secured
+const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
 );
 const connection = mongoose.connection;
@@ -130,8 +133,6 @@ app.use('/', express.static(path.resolve(__dirname, './client/build')));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './client/build/index.html'));
 });
-
-
 
 
 app.listen(PORT);
