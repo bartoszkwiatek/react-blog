@@ -4,11 +4,10 @@ import { Box, Button, ButtonGroup, Container, Flex, IconButton, Input, Spacer, T
 import React, { useEffect, useState } from 'react';
 import Highlight from '../Highlight';
 import Loading from '../Loading';
-
-
+import { handleErrors } from "../utils/handleErrors";
 
 const Profile = ({ match }) => {
-  const { user } = useAuth0();
+  const { user, getAccessTokenWithPopup, getAccessTokenSilently } = useAuth0();
 
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -19,13 +18,17 @@ const Profile = ({ match }) => {
   const handleTitleChange = (event) => setPostTitle(event.target.value)
   const handleContentChange = (event) => setLongContent(event.target.value)
   const postData = async (url, data) => {
+    const token = await getAccessTokenWithPopup(
+      {
+        audience: 'react-blog-api',
+        scope: "add:posts",
+      });
     const response = await fetch(url, {
       method: 'POST', // *GET, POST, PUT, DELETE, etc.
       cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': `Basic ${this.accessToken}`,
-        'Authorization': `Basic YWRtaW5AYWRtaW4uY29tOmFkbWlu`,
+        'Authorization': `Bearer ${token}`,
       },
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify(data) // body data type must match "Content-Type" header
@@ -34,15 +37,21 @@ const Profile = ({ match }) => {
   }
 
   const deletePost = async (url) => {
+    const token = await getAccessTokenSilently(
+      {
+        audience: 'react-blog-api',
+        scope: "delete:posts",
+      });
+
     const response = await fetch(url, {
-      method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+      method: 'DELETE',
       headers: {
-        // 'Authorization': `Basic ${this.accessToken}`,
-        'Authorization': `Basic YWRtaW5AYWRtaW4uY29tOmFkbWlu`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
-      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+      referrerPolicy: 'no-referrer',
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response.json();
   }
 
   function refreshPage() {
@@ -59,29 +68,35 @@ const Profile = ({ match }) => {
 
   useEffect(() => {
     fetch("/api/posts")
+      .then(handleErrors)
       .then(res => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
           setItems(result);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
           setIsLoaded(true);
-          setError(error);
         }
       )
+      .catch(error => {
+        setError(error);
+        setIsLoaded(true);
+
+      })
   }, [])
+
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <Container>
+      <Text as="h3">
+        Could not connect to the database
+      </Text>
+      <Text as="h4">
+        {error.message}
+      </Text>
+    </Container>
   } else if (!isLoaded) {
     return <div>Loading...</div>
   } else {
     return (
       <React.Fragment>
-
         <Tabs variant="line" colorScheme="teal">
           <TabList>
             <Tab>Profile</Tab>
@@ -95,6 +110,7 @@ const Profile = ({ match }) => {
                 alt="Profile"
                 className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
               />
+              <h2>{user.nickname}</h2>
               <h2>{user.name}</h2>
               <p className="lead text-muted">{user.email}</p>
               <Highlight>{JSON.stringify(user, null, 2)}</Highlight>
@@ -125,7 +141,7 @@ const Profile = ({ match }) => {
                   disabled={!postTitle || !longContent}
                   onClick={() => {
                     postData("/api/posts", newPost)
-                    refreshPage()
+                    // refreshPage()
                   }}
                   variant="outline"
                   colorScheme="teal"
@@ -180,7 +196,7 @@ const Profile = ({ match }) => {
                         <IconButton
                           onClick={() => {
                             deletePost(`api/posts/${item._id}`)
-                            refreshPage()
+                            // refreshPage()
                           }}
                           colorScheme="red"
                           aria-label="delete"

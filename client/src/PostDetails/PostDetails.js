@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import Loading from "../Loading";
+import { handleErrors } from "../utils/handleErrors";
 
 const PostDetails = ({ match }) => {
   // console.log(`${match.url}`);
@@ -11,12 +12,7 @@ const PostDetails = ({ match }) => {
   const [content, setContent] = useState([]);
   const url = `/api/posts/${match.params._id}`;
 
-  function handleErrors(response) {
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    return response;
-  }
+
 
   useEffect(() => {
     fetch(url)

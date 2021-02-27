@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import Loading from "../Loading";
 import { format, formatDistance, formatRelative, subDays } from 'date-fns'
+import { handleErrors } from "../utils/handleErrors";
 
 
 
@@ -10,13 +11,6 @@ const PostsList = ({ match }) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-
-  function handleErrors(response) {
-    if (!response.ok) {
-      throw Error(response.statusText);
-    }
-    return response;
-  }
 
   useEffect(() => {
     fetch("/api/posts")

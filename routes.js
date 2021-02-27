@@ -1,4 +1,7 @@
 const router = require('express').Router();
+const checkJwt = require('./checkJwt');
+const jwtAuthz = require('express-jwt-authz');
+
 let PostModel = require('./post.model');
 
 router.route('/').get((req, res) => {
@@ -9,7 +12,7 @@ router.route('/').get((req, res) => {
 
 
 // new post
-router.route('/').post((req, res) => {
+router.route('/').post(checkJwt, jwtAuthz(['add:posts']), async (req, res) => {
   // const username = req.body.username;
   const title = req.body.title;
   const shortContent = req.body.shortContent;

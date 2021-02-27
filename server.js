@@ -3,6 +3,7 @@ const PORT = process.env.PORT || 3001;
 const express = require('express');
 const app = express();
 const jwt = require('express-jwt')
+const jwtAuthz = require('express-jwt-authz');
 const jwksRsa = require('jwks-rsa')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
@@ -32,6 +33,8 @@ connection.once('open', () => {
   console.log("MongoDB database connection established successfully");
 })
 
+
+
 // const db = {};
 // db.posts = new AsyncNedb({
 //   filename: path.resolve(path.dirname(''), './database/posts.db'),
@@ -44,8 +47,40 @@ connection.once('open', () => {
 // });
 
 const postsRouter = require('./routes');
+const checkJwt = require('./checkJwt');
 app.use('/api/posts', postsRouter);
 
+
+// const checkJwt = jwt({
+//   // Dynamically provide a signing key based on the kid in the header and the signing keys provided by the JWKS endpoint
+//   secret: jwksRsa.expressJwtSecret({
+//     cache: true,
+//     rateLimit: true,
+//     jwksRequestsPerMinute: 5,
+//     jwksUri: `https://kwiaciu.eu.auth0.com/.well-known/jwks.json`
+//   }),
+
+//   // Validate the audience and the issuer
+//   audience: 'react-blog-api',
+//   issuer: 'https://kwiaciu.eu.auth0.com/',
+//   algorithms: ['RS256']
+// });
+
+// app.use(checkJwt);
+
+// app.get('/authorized', function (req, res) {
+//   res.send('Secured Resource');
+// });
+
+// Create timesheets API endpoint
+app.post('/api/timesheets', checkJwt, jwtAuthz(['read:posts']), function (req, res) {
+  // res.status(201).send({ message: "This is the POST /timesheets endpoint" });
+  var timesheet = req.body
+  // Save the timesheet to the database...
+
+  //send the response
+  res.status(201).send(timesheet);
+});
 
 
 
@@ -141,5 +176,5 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, './client/build/index.html'));
 });
 
-
+console.log(PORT)
 app.listen(PORT);
