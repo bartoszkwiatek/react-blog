@@ -1,4 +1,4 @@
-import { Box, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
+import { Box, Container, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import Loading from "../Loading";
@@ -10,28 +10,40 @@ const PostsList = ({ match }) => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-  console.log(error, isLoaded, items)
+
+  function handleErrors(response) {
+    if (!response.ok) {
+      throw Error(response.statusText);
+    }
+    return response;
+  }
 
   useEffect(() => {
     fetch("/api/posts")
+      .then(handleErrors)
       .then(res => res.json())
       .then(
         (result) => {
           setItems(result);
           setIsLoaded(true);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
         }
       )
+      .catch(error => {
+        setError(error);
+        setIsLoaded(true);
+
+      })
   }, [])
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <Container>
+      <Text as="h3">
+        Could not connect to the database
+      </Text>
+      <Text as="h4">
+        {error.message}
+      </Text>
+    </Container>
   } else if (!isLoaded) {
     return <Loading></Loading>
   } else {
