@@ -6,7 +6,7 @@ const theme = extendTheme({
     Container: {
       // 1. We can update the base styles
       baseStyle: {
-        "max-width": "80ch", // Normally, it is "semibold"
+        "maxWidth": "80ch", // Normally, it is "semibold"
       },
     }
   },

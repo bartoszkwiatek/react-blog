@@ -3,7 +3,6 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { Avatar, AvatarBadge, Button, Menu, MenuButton, MenuDivider, MenuGroup, MenuItem, MenuList } from '@chakra-ui/react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 
 const AvatarButton = () => {
@@ -24,16 +23,14 @@ const AvatarButton = () => {
     <React.Fragment>
 
       {!isAuthenticated && (
-        <Link>
-          <Button
-            id="qsLoginBtn"
-            colorScheme="teal"
-            className="btn-margin"
-            onClick={() => loginWithRedirect()}
-          >
-            Log in
-                  </Button>
-        </Link>
+        <Button
+          id="qsLoginBtn"
+          colorScheme="teal"
+          className="btn-margin"
+          onClick={() => loginWithRedirect()}
+        >
+          Log in
+        </Button>
       )
       }
 

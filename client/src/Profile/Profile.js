@@ -1,6 +1,6 @@
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { Box, Button, ButtonGroup, Container, Flex, HStack, IconButton, Input, Spacer, Tab, Table, TabList, TabPanel, TabPanels, Tabs, Text, Textarea, Th, Tr, VStack } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Container, Flex, IconButton, Input, Spacer, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Textarea, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
 import Highlight from '../Highlight';
 import Loading from '../Loading';

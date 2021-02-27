@@ -1,21 +1,13 @@
+import { Container } from '@chakra-ui/react';
 import React, { useContext } from 'react';
-import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
-// import HooksContainer1 from './hooks/hook1';
-import Callback from './Callback/Callback';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ExternalApi from './ExternalApi/ExternalApi';
 import Header from './Header/Header';
+import NavBar from './Header/NavBar';
 import Home from './Home/Home';
 import PostDetails from './PostDetails/PostDetails';
-// import HooksForm from './hooks/hooks_form1';
-import PrivateComponent from './PrivateComponents/PrivateComponent';
 import Profile from './Profile/Profile';
 import Context from './utils/context';
-import history from './utils/history';
-import ExternalApi from './ExternalApi/ExternalApi'
-import NavBar from './Header/NavBar'
-import { Container } from '@chakra-ui/react';
-
-
-
 
 // const PrivateRoute = ({ component: Component, auth }) => (
 //   <Route render={props => auth === true
@@ -25,17 +17,14 @@ import { Container } from '@chakra-ui/react';
 //   />
 // )
 
-
-
 const Routes = () => {
   const context = useContext(Context)
 
 
   return (
-    <Router history={history}>
+    <Router>
       <Header />
       <Container className="App">
-
         <NavBar />
 
         <br />

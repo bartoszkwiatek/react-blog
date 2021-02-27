@@ -38,32 +38,30 @@ const PostsList = ({ match }) => {
     return (
       <ul>
         {items.map(item => (
-          <LinkBox
+          <Link
+            to={`${match.url}posts/${item._id}`}
             key={item._id}
-            as="article"
-            p="5"
-            marginBottom="5"
-            borderWidth="1px"
-            rounded="md"
           >
-            <Link
-              to={`${match.url}posts/${item._id}`}
+            <LinkBox
+              as="article"
+              p="5"
+              marginBottom="5"
+              borderWidth="1px"
+              rounded="md"
             >
               <Box as="time" dateTime={item.createdAt}>
                 {format(new Date(item.createdAt), "dd-MM-yyyy HH:mm")}
               </Box>
               <Heading size="md" my="2">
-                <LinkOverlay href="#">
-                  {item.title}
-                </LinkOverlay>
+                {item.title}
               </Heading>
               <Text
                 style={{ whiteSpace: "pre-wrap" }}
                 dangerouslySetInnerHTML={{ __html: `${item.shortContent}... <b>read more</b>` }}
               >
               </Text>
-            </Link>
-          </LinkBox>
+            </LinkBox>
+          </Link>
 
         ))}
       </ul>

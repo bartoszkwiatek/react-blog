@@ -2,7 +2,6 @@ import { Box, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { Loader } from '../Loader';
 import Loading from "../Loading";
 
 const PostDetails = ({ match }) => {
@@ -29,7 +28,7 @@ const PostDetails = ({ match }) => {
           setError(error);
         }
       )
-  }, [])
+  }, [url])
 
   if (error) {
     return <div>Error: {error.message}</div>
@@ -51,9 +50,7 @@ const PostDetails = ({ match }) => {
 
         </Box>
         <Heading size="md" my="2">
-          <LinkOverlay href="#">
-            {content.title}
-          </LinkOverlay>
+          {content.title}
         </Heading>
         <Text
           style={{ whiteSpace: "pre-wrap" }}

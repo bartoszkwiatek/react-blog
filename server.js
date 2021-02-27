@@ -1,25 +1,32 @@
 const PORT = process.env.PORT || 3001;
 
 const express = require('express');
+const app = express();
+const jwt = require('express-jwt')
+const jwksRsa = require('jwks-rsa')
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 require('dotenv').config();
 
 
-const app = express();
+
 const path = require('path');
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 if (process.env.ENV === 'dev') {
   const cors = require('cors');
   app.use(cors());
 }
 
-
+const handleError = (error) => {
+  console.error(error)
+}
 
 //temporary password until secured
 const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
-);
+).catch(error => handleError(error));
+
 const connection = mongoose.connection;
 connection.once('open', () => {
   console.log("MongoDB database connection established successfully");

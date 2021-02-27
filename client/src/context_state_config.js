@@ -6,12 +6,7 @@ import * as ACTIONS from './store/actions/actions';
 import * as AuthReducer from './store/reducers/auth_reducer';
 import * as FormReducer from './store/reducers/form_reducer';
 import Routes from './Routes';
-import { useAuth0 } from "@auth0/auth0-react";
 
-// import Auth from './utils/auth';
-
-
-// const auth = new Auth()
 
 
 const ContextState = () => {

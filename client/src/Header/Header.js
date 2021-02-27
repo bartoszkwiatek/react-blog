@@ -1,12 +1,8 @@
-import { Avatar, AvatarBadge, Box, Button, Container, Flex, Heading, HStack, Image, Menu, MenuButton, MenuDivider, MenuGroup, MenuIcon, MenuItem, MenuList, Spacer, Tag, TagLabel, Text } from '@chakra-ui/react';
-import React, { useContext, useState } from 'react';
+import { Box, Container, Flex, Heading, Image, Spacer, Tag, TagLabel, Text } from '@chakra-ui/react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../utils/context';
 import headerImage from "./../assets/headerimage.jpg";
-import styles from "./Header.css"
-import { useAuth0 } from "@auth0/auth0-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AddIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import AvatarButton from './AvatarButton';
 
 
