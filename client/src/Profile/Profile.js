@@ -7,8 +7,18 @@ import Loading from '../Loading';
 import { handleErrors } from "../utils/handleErrors";
 
 const Profile = ({ match }) => {
+
+
   const { user, getAccessTokenWithPopup, getAccessTokenSilently } = useAuth0();
 
+  const getToken = (payload) => {
+    if (process.env.NODE_ENV === 'development') {
+      return getAccessTokenWithPopup(payload)
+    } else {
+      return getAccessTokenSilently(payload)
+    }
+
+  }
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
@@ -18,26 +28,26 @@ const Profile = ({ match }) => {
   const handleTitleChange = (event) => setPostTitle(event.target.value)
   const handleContentChange = (event) => setLongContent(event.target.value)
   const postData = async (url, data) => {
-    const token = await getAccessTokenWithPopup(
+    const token = await getToken(
       {
         audience: 'react-blog-api',
         scope: "add:posts",
       });
     const response = await fetch(url, {
-      method: 'POST', // *GET, POST, PUT, DELETE, etc.
-      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      method: 'POST',
+      cache: 'no-cache',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
       },
-      referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
+      referrerPolicy: 'no-referrer',
+      body: JSON.stringify(data)
     });
-    return response.json(); // parses JSON response into native JavaScript objects
+    return response.json();
   }
 
   const deletePost = async (url) => {
-    const token = await getAccessTokenSilently(
+    const token = await getToken(
       {
         audience: 'react-blog-api',
         scope: "delete:posts",
@@ -140,8 +150,8 @@ const Profile = ({ match }) => {
                 <Button
                   disabled={!postTitle || !longContent}
                   onClick={() => {
-                    postData("/api/posts", newPost)
-                    // refreshPage()
+                    postData("/api/posts", newPost);
+                    !(process.env.NODE_ENV === 'development') && refreshPage()
                   }}
                   variant="outline"
                   colorScheme="teal"
@@ -196,7 +206,7 @@ const Profile = ({ match }) => {
                         <IconButton
                           onClick={() => {
                             deletePost(`api/posts/${item._id}`)
-                            // refreshPage()
+                            !(process.env.NODE_ENV === 'development') && refreshPage()
                           }}
                           colorScheme="red"
                           aria-label="delete"
