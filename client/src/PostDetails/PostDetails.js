@@ -2,8 +2,9 @@ import { Box, Container, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/
 import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import Loading from "../Loading";
+import LoadingSpinner from "../LoadingSpinner";
 import { handleErrors } from "../utils/handleErrors";
+import { PostTemplate } from "./PostTemplate";
 
 const PostDetails = ({ match }) => {
   // console.log(`${match.url}`);
@@ -41,33 +42,15 @@ const PostDetails = ({ match }) => {
       </Text>
     </Container>
   } else if (!isLoaded) {
-    return <Loading></Loading>
+    return <LoadingSpinner></LoadingSpinner>
   } else {
     return (
       //turn into article
-      <LinkBox
-        as="article"
-        p="5"
-        marginBottom="5"
-        borderWidth="1px"
-        rounded="md"
-      >
-
-        <Box as="time" dateTime={content.createdAt}>
-          {format(new Date(content.createdAt), "dd-MM-yyyy HH:mm")}
-
-        </Box>
-        <Heading size="md" my="2">
-          {content.title}
-        </Heading>
-        <Text
-          style={{ whiteSpace: "pre-wrap" }}
-          dangerouslySetInnerHTML={{ __html: `${content.longContent}` }}
-        >
-        </Text>
-        <Link to={`/`}>Back</Link>
-
-      </LinkBox>
+      <PostTemplate
+        date={content.createdAt}
+        title={content.title}
+        content={content.longContent}
+      />
     )
   }
 };

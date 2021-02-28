@@ -1,7 +1,7 @@
-import { Center, Spinner } from "@chakra-ui/react";
+import { Box, Center, Spinner } from "@chakra-ui/react";
 import React from "react";
 
-const Loading = () => (
+const LoadingSpinner = () => (
   <Center>
     <Spinner
       thickness="4px"
@@ -13,4 +13,4 @@ const Loading = () => (
   </Center>
 )
 
-export default Loading;
+export default LoadingSpinner;

@@ -17,12 +17,14 @@ router.route('/').post(checkJwt, jwtAuthz(['add:posts']), async (req, res) => {
   const title = req.body.title;
   const shortContent = req.body.shortContent;
   const longContent = req.body.longContent;
+  const author = req.body.author;
   const createdAt = Date.now();
 
   const newPost = new PostModel({
     title,
     shortContent,
     longContent,
+    author,
     createdAt,
   });
 

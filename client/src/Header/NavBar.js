@@ -3,8 +3,6 @@ import { Button, HStack } from '@chakra-ui/react';
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-
-
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const {
@@ -46,38 +44,34 @@ const NavBar = () => {
   }
 
   return (
-    <React.Fragment>
-
-      <nav>
-        <HStack spacing="4">
-          <Link
-            to="/"
-            activeclassname="router-link-exact-active"
-          >
-            <Button colorScheme="teal" size="lg">Home</Button>
-          </Link>
-          <Link to='/profile'>
-            <Button colorScheme="teal" size="lg">Profile</Button>
-          </Link>
-          {isAuthenticated && (
-            // <Link
-            // to="/external-api"
-            // activeclassname="router-link-exact-active"
-            // >
-
-
-            <Button
-              colorScheme="teal"
-              size="lg"
-              onClick={() => console.log(externalApi())}
-            >External API</Button>
-            // </Link>
-          )}
+    <nav>
+      <HStack spacing="4">
+        <Link
+          to="/"
+          activeclassname="router-link-exact-active"
+        >
+          <Button colorScheme="teal"
+            size="lg">Home</Button>
+        </Link>
+        <Link to='/profile'>
+          <Button colorScheme="teal" size="lg">Profile</Button>
+        </Link>
+        {isAuthenticated && (
+          // <Link
+          // to="/external-api"
+          // activeclassname="router-link-exact-active"
+          // >
+          <Button
+            colorScheme="teal"
+            size="lg"
+            onClick={() => console.log(externalApi())}
+          >External API</Button>
+          // </Link>
+        )}
 
 
-        </HStack>
-      </nav>
-    </React.Fragment >
+      </HStack>
+    </nav >
   );
 };
 

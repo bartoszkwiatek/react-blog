@@ -8,6 +8,16 @@ const theme = extendTheme({
       baseStyle: {
         "maxWidth": "80ch", // Normally, it is "semibold"
       },
+    },
+
+    //following doesnt work:
+    Button: {
+      baseStyle: {
+        colorScheme: "teal",
+      },
+      focus: {
+        outline: "3px solid pink"
+      }
     }
   },
 

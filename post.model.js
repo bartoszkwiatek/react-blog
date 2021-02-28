@@ -7,6 +7,7 @@ const postSchema = new Schema({
   title: { type: String, required: true },
   shortContent: { type: String, required: true },
   longContent: { type: String, required: true },
+  author: { type: String, required: true },
   createdAt: { type: Date, required: true }
 }, {
   timestamps: true,

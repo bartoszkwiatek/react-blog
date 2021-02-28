@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Button, Alert } from "@chakra-ui/react";
-import Highlight from '../Highlight';
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
+import { Alert, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
 import config from "../auth_config.json";
-import Loading from "../Loading";
+import Highlight from '../Highlight';
+import LoadingSpinner from "../LoadingSpinner";
 
 const { apiOrigin = "http://localhost:3001" } = config;
 
@@ -140,5 +140,5 @@ export const ExternalApiComponent = () => {
 };
 
 export default withAuthenticationRequired(ExternalApiComponent, {
-  onRedirecting: () => <Loading />,
+  onRedirecting: () => <LoadingSpinner />,
 });

@@ -1,8 +1,9 @@
 import { useAuth0 } from '@auth0/auth0-react';
+import { Progress } from '@chakra-ui/react';
 import React from 'react';
 import './App.css';
 import ContextState from './context_state_config';
-import Loading from './Loading'
+import LoadingSpinner from './LoadingSpinner';
 
 // fontawesome
 import initFontAwesome from "./utils/initFontAwesome";
@@ -16,7 +17,9 @@ function App() {
   }
 
   if (isLoading) {
-    return <Loading />;
+    return <Progress size="xs"
+      colorScheme="teal"
+      isIndeterminate />;
   }
 
   return (

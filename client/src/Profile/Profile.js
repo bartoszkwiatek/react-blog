@@ -1,9 +1,11 @@
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { Box, Button, ButtonGroup, Container, Flex, IconButton, Input, Spacer, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Textarea, VStack } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Container, Divider, Flex, Heading, IconButton, Input, Spacer, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Textarea, VStack } from "@chakra-ui/react";
+import { format } from "date-fns";
 import React, { useEffect, useState } from 'react';
 import Highlight from '../Highlight';
-import Loading from '../Loading';
+import LoadingSpinner from '../LoadingSpinner';
+import { PostTemplate } from "../PostDetails/PostTemplate";
 import { handleErrors } from "../utils/handleErrors";
 
 const Profile = ({ match }) => {
@@ -89,9 +91,8 @@ const Profile = ({ match }) => {
     title: postTitle,
     shortContent: longContent.slice(0, 120),
     longContent: longContent,
+    author: user.nickname
   }
-
-
 
   useEffect(() => {
     fetch("/api/posts")
@@ -120,7 +121,7 @@ const Profile = ({ match }) => {
       </Text>
     </Container>
   } else if (!isLoaded) {
-    return <div>Loading...</div>
+    return <LoadingSpinner></LoadingSpinner>
   } else {
     return (
       <React.Fragment>
@@ -174,37 +175,43 @@ const Profile = ({ match }) => {
                   colorScheme="teal"
                   aria-label="save"
                   rightIcon={< AddIcon />}
-                >Add</Button>
-                <Container>
-                  <Text mb="8px">{postTitle}</Text>
-                  <Text mb="8px" style={{ whiteSpace: "pre-wrap" }}
-                    dangerouslySetInnerHTML={{ __html: `${longContent}` }}
-                  ></Text>
-                </Container>
+                >
+                  Add
+                  </Button>
               </VStack>
+              <Divider margin={"2rem 0 2rem 0"} orientation="horizontal" />
+              <Text as="h3">Preview:</Text>
+              <PostTemplate
+                date={new Date()}
+                title={postTitle}
+                content={longContent}
+              />
             </TabPanel>
             <TabPanel>
               <ul>
                 {items.map(item => (
                   <Box
-                    margin="1"
-                    padding="1"
-                    border="1px"
-                    borderRadius="sm"
                     key={item._id}
+                    as="article"
+                    p="5"
+                    marginBottom="5"
+                    borderWidth="1px"
+                    rounded="md"
                   >
                     <Flex
-                      align="center">
-                      <Box
-                        margin="1"
-                        padding="1"
-                      >
-                        <h2>
+                    // align="center"
+                    >
+                      <Box>
+                        <Box as="time" dateTime={item.createdAt}>
+                          {format(new Date(item.createdAt), "dd-MM-yyyy HH:mm")}
+                        </Box>
+                        <Heading size="md" my="2">
                           {item.title}
-                        </h2>
-                        <p>
-                          {item.shortContent}
-                        </p>
+                        </Heading>
+                        <Text
+                          style={{ whiteSpace: "pre-wrap" }}
+                        >{item.shortContent}
+                        </Text>
                       </Box>
                       <Spacer />
                       <ButtonGroup
@@ -217,7 +224,7 @@ const Profile = ({ match }) => {
                             alert('Nothing happened!')
                           }}
                           colorScheme="teal"
-                          aria-label="delete"
+                          aria-label="edit"
                           icon={< EditIcon />}
                         />
                         <IconButton
@@ -231,7 +238,6 @@ const Profile = ({ match }) => {
                         />
                       </ButtonGroup>
                     </Flex>
-
                   </Box>
                 ))}
               </ul>
@@ -244,5 +250,5 @@ const Profile = ({ match }) => {
 }
 
 export default withAuthenticationRequired(Profile, {
-  onRedirecting: () => <Loading />,
+  onRedirecting: () => <LoadingSpinner />,
 });

@@ -1,9 +1,9 @@
 import { Box, Container, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import Loading from "../Loading";
 import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 import { handleErrors } from "../utils/handleErrors";
+import LoadingSpinner from "../LoadingSpinner";
 
 
 
@@ -39,7 +39,7 @@ const PostsList = ({ match }) => {
       </Text>
     </Container>
   } else if (!isLoaded) {
-    return <Loading></Loading>
+    return <LoadingSpinner></LoadingSpinner>
   } else {
     return (
       <ul>
