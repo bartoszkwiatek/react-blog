@@ -10,7 +10,6 @@ const Header = () => {
   const context = useContext(Context)
 
 
-
   return (
     <React.Fragment>
       <Box

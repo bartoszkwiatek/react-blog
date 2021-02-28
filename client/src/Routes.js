@@ -1,7 +1,8 @@
-import { Container } from '@chakra-ui/react';
+import { Container, Divider } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import ExternalApi from './ExternalApi/ExternalApi';
+import Footer from './Footer/Footer';
 import Header from './Header/Header';
 import NavBar from './Header/NavBar';
 import Home from './Home/Home';
@@ -26,7 +27,6 @@ const Routes = () => {
       <Header />
       <Container className="App">
         <NavBar />
-
         <br />
         <Switch>
           <Route exact path='/' component={Home} />
@@ -51,6 +51,11 @@ const Routes = () => {
 
         </Switch>
       </Container>
+      <br />
+      <Divider>
+      </Divider>
+      <br />
+      <Footer></Footer>
     </Router>
   )
 }

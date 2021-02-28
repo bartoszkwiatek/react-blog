@@ -26,7 +26,7 @@ ReactDOM.render(
 
         <App />
       </ChakraProvider>
-    </Auth0Provider>,
+    </Auth0Provider>
 
   </React.StrictMode >,
   document.getElementById('root')
