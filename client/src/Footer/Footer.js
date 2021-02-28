@@ -20,7 +20,6 @@ const Footer = () => {
           <Text
             color="white"
           >
-
             Bartosz Kwiatek 🌸 bkwiatek3@gmail.com
             </Text>
           {/* </Link> */}

@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Heading, Image, Spacer, Tag, TagLabel, Text } from '@chakra-ui/react';
+import { Box, Container, Divider, Flex, Heading, Image, Spacer, Tag, TagLabel, Text } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Context from '../utils/context';
@@ -26,9 +26,10 @@ const Header = () => {
                 <Text
                   color="white"
                 >
-                  Greatest react blog ever
+                  Greatest react blog ever.
                 </Text>
               </Link>
+              <Divider marginLeft={4} h="2.5rem" w="3px" orientation="vertical"></Divider>
               <Spacer />
               <AvatarButton
               ></AvatarButton>
