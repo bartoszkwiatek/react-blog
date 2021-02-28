@@ -8,7 +8,6 @@ import { handleErrors } from "../utils/handleErrors";
 
 const Profile = ({ match }) => {
 
-
   const { user, getAccessTokenWithPopup, getAccessTokenSilently } = useAuth0();
 
   const getToken = (payload) => {
@@ -55,6 +54,24 @@ const Profile = ({ match }) => {
 
     const response = await fetch(url, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      referrerPolicy: 'no-referrer',
+    });
+    return response.json();
+  }
+
+  const editPost = async (url) => {
+    const token = await getToken(
+      {
+        audience: 'react-blog-api',
+        scope: "edit:posts",
+      });
+
+    const response = await fetch(url, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`,
