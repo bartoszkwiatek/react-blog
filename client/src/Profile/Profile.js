@@ -1,6 +1,6 @@
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons';
-import { Box, Button, ButtonGroup, Container, Divider, Flex, Heading, IconButton, Input, Spacer, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Textarea, VStack } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Container, Divider, Flex, Heading, IconButton, Input, MenuDivider, Spacer, StackDivider, Tab, TabList, TabPanel, TabPanels, Tabs, Text, Textarea, VStack } from "@chakra-ui/react";
 import { format } from "date-fns";
 import React, { useEffect, useState } from 'react';
 import Highlight from '../Highlight';
@@ -172,9 +172,10 @@ const Profile = ({ match }) => {
                     postData("/api/posts", newPost);
                     !(process.env.NODE_ENV === 'development') && refreshPage()
                   }}
-                  variant="outline"
+                  // variant="outline"
                   colorScheme="teal"
                   aria-label="save"
+                  title="save"
                   rightIcon={< AddIcon />}
                 >
                   Add
@@ -224,19 +225,29 @@ const Profile = ({ match }) => {
                         </Text>
                       </Box>
                       <Spacer />
-                      <ButtonGroup
+
+                      <VStack
+                        borderLeft="solid 1px"
+                        borderColor={"gray.200"}
+                        pl="1rem"
+                        ml="1rem"
                         variant="outline"
                         fontSize="20"
-                        spacing="2"
+
+                        // flexDirection="column"
+                        spacing="3"
+                      // display="block"
                       >
                         <IconButton
                           onClick={() => {
                             alert('Nothing happened!')
                           }}
-                          colorScheme="teal"
+                          colorScheme="blue"
                           aria-label="edit"
+                          title="edit"
                           icon={< EditIcon />}
                         />
+                        {/* <Spacer /> */}
                         <IconButton
                           onClick={() => {
                             deletePost(`api/posts/${item._id}`)
@@ -244,9 +255,10 @@ const Profile = ({ match }) => {
                           }}
                           colorScheme="red"
                           aria-label="delete"
+                          title="delete"
                           icon={< DeleteIcon />}
                         />
-                      </ButtonGroup>
+                      </VStack>
                     </Flex>
                   </Box>
                 ))}
