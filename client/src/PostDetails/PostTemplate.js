@@ -1,7 +1,8 @@
-import { Box, Heading, Text } from "@chakra-ui/react"
+import { Box, Flex, Heading, Text } from "@chakra-ui/react"
 import { format } from "date-fns"
 import { Link } from "react-router-dom"
 import React from 'react';
+import { PostAuthor } from "./PostAuthor";
 
 
 export const PostTemplate = (props) => {
@@ -14,9 +15,17 @@ export const PostTemplate = (props) => {
       borderWidth="1px"
       rounded="md"
     >
-      <Box as="time" dateTime={props.date}>
-        {format(new Date(props.date), "dd-MM-yyyy HH:mm")}
-      </Box>
+      <Flex
+        justifyContent="space-between"
+      >
+        <Box as="time" dateTime={props.date}>
+          {format(new Date(props.date), "dd.MM.yyyy HH:mm")}
+        </Box>
+        <PostAuthor
+          author={props.author}
+          src=""
+        />
+      </Flex>
       <Heading size="md" my="2">
         {props.title}
       </Heading>
@@ -26,6 +35,6 @@ export const PostTemplate = (props) => {
       >
       </Text>
       <Link to={`/`}>Back</Link>
-    </Box>
+    </Box >
   )
 }

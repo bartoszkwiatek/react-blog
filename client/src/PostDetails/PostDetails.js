@@ -42,7 +42,7 @@ const PostDetails = ({ match }) => {
       </Text>
     </Container>
   } else if (!isLoaded) {
-    return <LoadingSpinner></LoadingSpinner>
+    return <LoadingSpinner />
   } else {
     return (
       //turn into article
@@ -50,6 +50,7 @@ const PostDetails = ({ match }) => {
         date={content.createdAt}
         title={content.title}
         content={content.longContent}
+        author={content.author}
       />
     )
   }

@@ -1,9 +1,10 @@
-import { Box, Container, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
+import { Avatar, Badge, Box, Container, Flex, Heading, LinkBox, LinkOverlay, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 import { handleErrors } from "../utils/handleErrors";
 import LoadingSpinner from "../LoadingSpinner";
+import { PostAuthor } from "../PostDetails/PostAuthor";
 
 
 
@@ -55,11 +56,20 @@ const PostsList = ({ match }) => {
               borderWidth="1px"
               rounded="md"
             >
-              <Box as="time" dateTime={item.createdAt}>
-                {format(new Date(item.createdAt), "dd-MM-yyyy HH:mm")}
-              </Box>
+              <Flex
+                justifyContent="space-between"
+              >
+                <Box as="time" size="sm" dateTime={item.createdAt}>
+                  {format(new Date(item.createdAt), "dd.MM.yyyy HH:mm")}
+                </Box>
+                <PostAuthor
+                  author={item.author}
+                  src=""
+                />
+              </Flex>
               <Heading size="md" my="2">
                 {item.title}
+
               </Heading>
               <Text
                 style={{ whiteSpace: "pre-wrap" }}
@@ -69,8 +79,9 @@ const PostsList = ({ match }) => {
             </LinkBox>
           </Link>
 
-        ))}
-      </ul>
+        ))
+        }
+      </ul >
     )
   }
 }

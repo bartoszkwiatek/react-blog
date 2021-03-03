@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import React, { useEffect, useState } from 'react';
 import Highlight from '../Highlight';
 import LoadingSpinner from '../LoadingSpinner';
+import { PostAuthor } from "../PostDetails/PostAuthor";
 import { PostTemplate } from "../PostDetails/PostTemplate";
 import { handleErrors } from "../utils/handleErrors";
 
@@ -185,6 +186,7 @@ const Profile = ({ match }) => {
                 date={new Date()}
                 title={postTitle}
                 content={longContent}
+                author={user.nickname}
               />
             </TabPanel>
             <TabPanel>
@@ -202,9 +204,17 @@ const Profile = ({ match }) => {
                     // align="center"
                     >
                       <Box>
-                        <Box as="time" dateTime={item.createdAt}>
-                          {format(new Date(item.createdAt), "dd-MM-yyyy HH:mm")}
-                        </Box>
+                        <Flex
+                          justifyContent="space-between"
+                        >
+                          <Box as="time" size="sm" dateTime={item.createdAt}>
+                            {format(new Date(item.createdAt), "dd.MM.yyyy HH:mm")}
+                          </Box>
+                          <PostAuthor
+                            author={item.author}
+                            src=""
+                          />
+                        </Flex>
                         <Heading size="md" my="2">
                           {item.title}
                         </Heading>
