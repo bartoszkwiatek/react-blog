@@ -33,7 +33,7 @@ import { handleErrors } from '../utils/handleErrors'
 const Profile = ({ match }) => {
   const { user, getAccessTokenWithPopup, getAccessTokenSilently } = useAuth0()
 
-  console.log(user.app_metadata)
+  // console.log(user.app_metadata)
 
   const getToken = (payload) => {
     if (process.env.NODE_ENV === 'development') {
@@ -54,7 +54,7 @@ const Profile = ({ match }) => {
   // its working but...
   const handleChange = (event) => {
     const input = event.target.id
-    console.log(input)
+    // console.log(input)
     switch (input) {
       case 'new-post-title':
         setNewPostTitle(event.target.value)
@@ -170,7 +170,7 @@ const Profile = ({ match }) => {
       })
   }, [])
 
-  console.log(items)
+  // console.log(items)
   if (error) {
     return (
       <Container>

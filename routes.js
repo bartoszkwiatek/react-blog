@@ -44,8 +44,9 @@ router.route('/').post(checkJwt, jwtAuthz(['add:posts']), async (req, res) => {
 // delete post
 router
   .route('/:id')
-  .delete(checkJwt, jwtAuthz(['edit:posts']), async (req, res) => {
-    PostModel.find(req.params.id)
+  .delete(checkJwt, jwtAuthz(['delete:posts']), async (req, res) => {
+    console.log(req.params.id)
+    PostModel.findByIdAndDelete(req.params.id)
       .then(() => res.json('Post deleted.'))
       .catch((err) => res.status(400).json('Error: ' + err))
   })
@@ -59,7 +60,6 @@ router
         post.title = req.body.title
         post.shortContent = req.body.shortContent
         post.longContent = req.body.longContent
-        post.createdAt = Date.parse(req.body.createdAt)
 
         post
           .save()
