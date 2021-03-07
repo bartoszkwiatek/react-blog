@@ -26,6 +26,7 @@ import LoadingSpinner from '../LoadingSpinner'
 import { PostAuthor } from '../PostDetails/PostAuthor'
 import { PostTemplate } from '../PostDetails/PostTemplate'
 import { handleErrors } from '../utils/handleErrors'
+import { ProfileTab } from './ProfileTab'
 
 const Profile = ({ match }) => {
   const { user, getAccessTokenWithPopup, getAccessTokenSilently } = useAuth0()
@@ -201,15 +202,7 @@ const Profile = ({ match }) => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <img
-                src={user.picture}
-                alt="Profile"
-                className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
-              />
-              <h2>{user.nickname}</h2>
-              <h2>{user.name}</h2>
-              <p className="lead text-muted">{user.email}</p>
-              <Highlight>{JSON.stringify(user, null, 2)}</Highlight>
+              <ProfileTab user={user}></ProfileTab>
             </TabPanel>
             <TabPanel>
               <VStack spacing={2} align="flex-end">
