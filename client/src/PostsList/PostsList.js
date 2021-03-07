@@ -1,20 +1,10 @@
-import {
-  Avatar,
-  Badge,
-  Box,
-  Container,
-  Flex,
-  Heading,
-  LinkBox,
-  LinkOverlay,
-  Text,
-} from '@chakra-ui/react'
+import { Box, Container, Flex, Heading, LinkBox, Text } from '@chakra-ui/react'
+import { format } from 'date-fns'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { format, formatDistance, formatRelative, subDays } from 'date-fns'
-import { handleErrors } from '../utils/handleErrors'
 import LoadingSpinner from '../LoadingSpinner'
 import { PostAuthor } from '../PostDetails/PostAuthor'
+import { handleErrors } from '../utils/handleErrors'
 
 const PostsList = ({ match }) => {
   const [error, setError] = useState(null)

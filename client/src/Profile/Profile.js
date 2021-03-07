@@ -3,16 +3,13 @@ import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
-  ButtonGroup,
   Container,
   Divider,
   Flex,
   Heading,
   IconButton,
   Input,
-  MenuDivider,
   Spacer,
-  StackDivider,
   Tab,
   TabList,
   TabPanel,
@@ -36,11 +33,11 @@ const Profile = ({ match }) => {
   // console.log(user.app_metadata)
 
   const getToken = (payload) => {
-    if (process.env.NODE_ENV === 'development') {
-      return getAccessTokenWithPopup(payload)
-    } else {
-      return getAccessTokenSilently(payload)
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    // return getAccessTokenWithPopup(payload)
+    // } else {
+    return getAccessTokenSilently(payload)
+    // }
   }
   const [error, setError] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -50,11 +47,12 @@ const Profile = ({ match }) => {
   const [editPostTitle, setEditPostTitle] = useState('')
   const [editPostContent, setEditPostContent] = useState('')
   const [editPostId, setEditPostId] = useState('')
+  const [numberOfUpdates, setNumberOfUpdates] = useState(0)
 
   // its working but...
   const handleChange = (event) => {
     const input = event.target.id
-    // console.log(input)
+    console.log(input)
     switch (input) {
       case 'new-post-title':
         setNewPostTitle(event.target.value)
@@ -137,9 +135,18 @@ const Profile = ({ match }) => {
     })
     return response.json()
   }
-
   function refreshPage() {
-    console.log('refresh')
+    if (!(process.env.NODE_ENV === 'development')) {
+      // window.location.reload(false)
+    } else {
+      console.log('refreshPage here!')
+    }
+
+    // change to fetch function
+    setItems([])
+    setIsLoaded(false)
+    setError(null)
+    setNumberOfUpdates(numberOfUpdates + 1)
     // window.location.reload(false)
   }
 
@@ -169,7 +176,8 @@ const Profile = ({ match }) => {
         setError(error)
         setIsLoaded(true)
       })
-  }, [])
+    console.log('useEffect here!', numberOfUpdates)
+  }, [numberOfUpdates])
 
   // console.log(items)
   if (error) {
@@ -225,9 +233,10 @@ const Profile = ({ match }) => {
                 />
                 <Button
                   disabled={!newPostTitle || !newPostContent}
-                  onClick={() => {
-                    addPost('/api/posts', newPostData)
-                    !(process.env.NODE_ENV === 'development') && refreshPage()
+                  onClick={async () => {
+                    await addPost('/api/posts', newPostData)
+                    refreshPage()
+                    // !(process.env.NODE_ENV === 'development') && refreshPage()
                   }}
                   // variant="outline"
                   colorScheme="teal"
@@ -269,9 +278,9 @@ const Profile = ({ match }) => {
                 />
                 <Button
                   disabled={!editPostTitle || !editPostContent}
-                  onClick={() => {
-                    editPost(`api/posts/${editPostId}`, editPostData)
-                    !(process.env.NODE_ENV === 'development') && refreshPage()
+                  onClick={async () => {
+                    await editPost(`api/posts/${editPostId}`, editPostData)
+                    refreshPage()
                   }}
                   // variant="outline"
                   colorScheme="blue"
@@ -344,10 +353,9 @@ const Profile = ({ match }) => {
                         />
                         {/* <Spacer /> */}
                         <IconButton
-                          onClick={() => {
-                            deletePost(`api/posts/${item._id}`)
-                            !(process.env.NODE_ENV === 'development') &&
-                              refreshPage()
+                          onClick={async () => {
+                            await deletePost(`api/posts/${item._id}`)
+                            refreshPage()
                           }}
                           colorScheme="red"
                           aria-label="delete"
