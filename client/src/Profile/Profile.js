@@ -139,7 +139,8 @@ const Profile = ({ match }) => {
   }
 
   function refreshPage() {
-    window.location.reload(false)
+    console.log('refresh')
+    // window.location.reload(false)
   }
 
   const newPostData = {
