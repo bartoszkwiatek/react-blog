@@ -45,6 +45,7 @@ const Profile = ({ match }) => {
   const [editPostId, setEditPostId] = useState('')
   const [numberOfUpdates, setNumberOfUpdates] = useState(0)
   const { isLoaded, items, error } = useFetch('/api/posts', numberOfUpdates)
+  const [tabIndex, setTabIndex] = useState(0)
 
   // its working but...
   const handleChange = (event) => {
@@ -77,6 +78,7 @@ const Profile = ({ match }) => {
     setEditPostTitle(item.title)
     setEditPostContent(item.longContent)
     setEditPostId(item._id)
+    handleTabsChange(2)
   }
 
   const addPost = async (url, data) => {
@@ -151,6 +153,10 @@ const Profile = ({ match }) => {
     author: user.nickname,
   }
 
+  const handleTabsChange = (index) => {
+    setTabIndex(index)
+  }
+
   if (error) {
     return (
       <Container>
@@ -163,11 +169,17 @@ const Profile = ({ match }) => {
   } else {
     return (
       <React.Fragment>
-        <Tabs variant="line" colorScheme="teal">
+        <Tabs
+          index={tabIndex}
+          onChange={handleTabsChange}
+          variant="line"
+          colorScheme="teal"
+          isLazy
+        >
           <TabList>
             <Tab>Profile</Tab>
             <Tab>New post</Tab>
-            <Tab>Edit post</Tab>
+            <Tab isDisabled={editPostId === ''}>Edit post</Tab>
             <Tab>Posts list</Tab>
           </TabList>
           <TabPanels>
@@ -199,6 +211,7 @@ const Profile = ({ match }) => {
                   onClick={async () => {
                     await addPost('/api/posts', newPostData)
                     refreshPage()
+                    handleTabsChange(3)
                     // !(process.env.NODE_ENV === 'development') && refreshPage()
                   }}
                   // variant="outline"
@@ -244,6 +257,7 @@ const Profile = ({ match }) => {
                   onClick={async () => {
                     await editPost(`api/posts/${editPostId}`, editPostData)
                     refreshPage()
+                    handleTabsChange(3)
                   }}
                   // variant="outline"
                   colorScheme="blue"
@@ -319,6 +333,7 @@ const Profile = ({ match }) => {
                           onClick={async () => {
                             await deletePost(`api/posts/${item._id}`)
                             refreshPage()
+                            handleTabsChange(3)
                           }}
                           colorScheme="red"
                           aria-label="delete"
