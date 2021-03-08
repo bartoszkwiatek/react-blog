@@ -19,7 +19,9 @@ export const useFetch = (url, numberOfUpdates = 0) => {
         setError(error)
         setIsLoaded(true)
       })
-    // console.log('useEffect custom hook here!', numberOfUpdates)
+    console.log(items)
+    console.log('useEffect custom hook here!', numberOfUpdates)
+    // return () => ac.abort()
   }, [url, numberOfUpdates])
 
   return {

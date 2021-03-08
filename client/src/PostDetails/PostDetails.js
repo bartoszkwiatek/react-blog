@@ -1,29 +1,12 @@
 import { Container, Text } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import LoadingSpinner from '../LoadingSpinner'
-import { handleErrors } from '../utils/handleErrors'
+import { useFetch } from '../utils/useFetch'
 import { PostTemplate } from './PostTemplate'
 
 const PostDetails = ({ match }) => {
-  // console.log(`${match.url}`);
-  const [error, setError] = useState(null)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [content, setContent] = useState([])
   const url = `/api/posts/${match.params._id}`
-
-  useEffect(() => {
-    fetch(url)
-      .then(handleErrors)
-      .then((res) => res.json())
-      .then((result) => {
-        setContent(result)
-        setIsLoaded(true)
-      })
-      .catch((error) => {
-        setError(error)
-        setIsLoaded(true)
-      })
-  }, [url])
+  const { isLoaded, items, error } = useFetch(url)
 
   if (error) {
     return (
@@ -38,10 +21,10 @@ const PostDetails = ({ match }) => {
     return (
       //turn into article
       <PostTemplate
-        date={content.createdAt}
-        title={content.title}
-        content={content.longContent}
-        author={content.author}
+        date={items.createdAt}
+        title={items.title}
+        content={items.longContent}
+        author={items.author}
       />
     )
   }

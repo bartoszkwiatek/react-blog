@@ -26,29 +26,25 @@ import LoadingSpinner from '../LoadingSpinner'
 import { PostAuthor } from '../PostDetails/PostAuthor'
 import { PostTemplate } from '../PostDetails/PostTemplate'
 import { handleErrors } from '../utils/handleErrors'
+import { useFetch } from '../utils/useFetch'
 import { ProfileTab } from './ProfileTab'
 
 const Profile = ({ match }) => {
-  const { user, getAccessTokenWithPopup, getAccessTokenSilently } = useAuth0()
+  const { user, getAccessTokenSilently } = useAuth0()
+  console.log(user)
 
-  // console.log(user.app_metadata)
+  console.log(user.app_metadata)
 
-  const getToken = (payload) => {
-    // if (process.env.NODE_ENV === 'development') {
-    // return getAccessTokenWithPopup(payload)
-    // } else {
-    return getAccessTokenSilently(payload)
-    // }
-  }
-  const [error, setError] = useState(null)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [items, setItems] = useState([])
+  // const [error, setError] = useState(null)
+  // const [isLoaded, setIsLoaded] = useState(false)
+  // const [items, setItems] = useState([])
   const [newPostTitle, setNewPostTitle] = useState('')
   const [newPostContent, setNewPostContent] = useState('')
   const [editPostTitle, setEditPostTitle] = useState('')
   const [editPostContent, setEditPostContent] = useState('')
   const [editPostId, setEditPostId] = useState('')
   const [numberOfUpdates, setNumberOfUpdates] = useState(0)
+  const { isLoaded, items, error } = useFetch('/api/posts', numberOfUpdates)
 
   // its working but...
   const handleChange = (event) => {
@@ -84,7 +80,7 @@ const Profile = ({ match }) => {
   }
 
   const addPost = async (url, data) => {
-    const token = await getToken({
+    const token = await getAccessTokenSilently({
       audience: 'react-blog-api',
       scope: 'add:posts',
     })
@@ -102,7 +98,7 @@ const Profile = ({ match }) => {
   }
 
   const editPost = async (url, data) => {
-    const token = await getToken({
+    const token = await getAccessTokenSilently({
       audience: 'react-blog-api',
       scope: 'edit:posts',
     })
@@ -121,7 +117,7 @@ const Profile = ({ match }) => {
   }
 
   const deletePost = async (url) => {
-    const token = await getToken({
+    const token = await getAccessTokenSilently({
       audience: 'react-blog-api',
       scope: 'delete:posts',
     })
@@ -137,18 +133,8 @@ const Profile = ({ match }) => {
     return response.json()
   }
   function refreshPage() {
-    if (!(process.env.NODE_ENV === 'development')) {
-      // window.location.reload(false)
-    } else {
-      console.log('refreshPage here!')
-    }
-
-    // change to fetch function
-    setItems([])
-    setIsLoaded(false)
-    setError(null)
+    console.log('refreshPage here!')
     setNumberOfUpdates(numberOfUpdates + 1)
-    // window.location.reload(false)
   }
 
   const newPostData = {
@@ -165,22 +151,6 @@ const Profile = ({ match }) => {
     author: user.nickname,
   }
 
-  useEffect(() => {
-    fetch('/api/posts')
-      .then(handleErrors)
-      .then((res) => res.json())
-      .then((result) => {
-        setItems(result)
-        setIsLoaded(true)
-      })
-      .catch((error) => {
-        setError(error)
-        setIsLoaded(true)
-      })
-    console.log('useEffect here!', numberOfUpdates)
-  }, [numberOfUpdates])
-
-  // console.log(items)
   if (error) {
     return (
       <Container>
@@ -307,7 +277,7 @@ const Profile = ({ match }) => {
                     <Flex
                     // align="center"
                     >
-                      <Box>
+                      <Box w="100%">
                         <Flex justifyContent="space-between">
                           <Box as="time" size="sm" dateTime={item.createdAt}>
                             {format(

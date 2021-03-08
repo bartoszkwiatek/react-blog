@@ -1,29 +1,13 @@
 import { Box, Container, Flex, Heading, LinkBox, Text } from '@chakra-ui/react'
 import { format } from 'date-fns'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import LoadingSpinner from '../LoadingSpinner'
 import { PostAuthor } from '../PostDetails/PostAuthor'
-import { handleErrors } from '../utils/handleErrors'
+import { useFetch } from '../utils/useFetch'
 
 const PostsList = ({ match }) => {
-  const [error, setError] = useState(null)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [items, setItems] = useState([])
-
-  useEffect(() => {
-    fetch('/api/posts')
-      .then(handleErrors)
-      .then((res) => res.json())
-      .then((result) => {
-        setItems(result)
-        setIsLoaded(true)
-      })
-      .catch((error) => {
-        setError(error)
-        setIsLoaded(true)
-      })
-  }, [])
+  const { isLoaded, items, error } = useFetch('/api/posts')
 
   if (error) {
     return (
