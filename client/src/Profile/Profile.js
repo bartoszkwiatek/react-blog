@@ -29,6 +29,7 @@ import { handleErrors } from '../utils/handleErrors'
 import { useFetch } from '../utils/useFetch'
 import { EditPostTab } from './EditPostTab'
 import { NewPostTab } from './NewPostTab'
+import { PostListTab } from './PostListTab'
 import { ProfileTab } from './ProfileTab'
 
 const Profile = ({ match }) => {
@@ -120,73 +121,12 @@ const Profile = ({ match }) => {
               ></EditPostTab>
             </TabPanel>
             <TabPanel>
-              <ul>
-                {items.map((item) => (
-                  <Box
-                    key={item._id}
-                    as="article"
-                    p="5"
-                    marginBottom="5"
-                    borderWidth="1px"
-                    rounded="md"
-                  >
-                    <Flex
-                    // align="center"
-                    >
-                      <Box w="100%">
-                        <Flex justifyContent="space-between">
-                          <Box as="time" size="sm" dateTime={item.createdAt}>
-                            {format(
-                              new Date(item.createdAt),
-                              'dd.MM.yyyy HH:mm',
-                            )}
-                          </Box>
-                          <PostAuthor author={item.author} src="" />
-                        </Flex>
-                        <Heading size="md" my="2">
-                          {item.title}
-                        </Heading>
-                        <Text style={{ whiteSpace: 'pre-wrap' }}>
-                          {item.shortContent}
-                        </Text>
-                      </Box>
-                      <Spacer />
-
-                      <VStack
-                        borderLeft="solid 1px"
-                        borderColor={'gray.200'}
-                        pl="1rem"
-                        ml="1rem"
-                        variant="outline"
-                        fontSize="20"
-                        // flexDirection="column"
-                        spacing="3"
-                        // display="block"
-                      >
-                        <IconButton
-                          onClick={() => handleEditButton(item)}
-                          colorScheme="blue"
-                          aria-label="edit"
-                          title="edit"
-                          icon={<EditIcon />}
-                        />
-                        {/* <Spacer /> */}
-                        <IconButton
-                          onClick={async () => {
-                            await deletePost(`api/posts/${item._id}`)
-                            refreshPage()
-                            handleTabsChange(3)
-                          }}
-                          colorScheme="red"
-                          aria-label="delete"
-                          title="delete"
-                          icon={<DeleteIcon />}
-                        />
-                      </VStack>
-                    </Flex>
-                  </Box>
-                ))}
-              </ul>
+              <PostListTab
+                handleEditButton={(item) => handleEditButton(item)}
+                items={items}
+                refresh={refreshPage}
+                handleTabsChange={(index) => handleTabsChange(index)}
+              ></PostListTab>
             </TabPanel>
           </TabPanels>
         </Tabs>
