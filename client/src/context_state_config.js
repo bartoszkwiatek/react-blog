@@ -1,13 +1,11 @@
-import React, { useReducer } from 'react';
-import Context from './utils/context';
-import * as ACTIONS from './store/actions/actions';
+import React, { useReducer } from 'react'
+import Context from './utils/context'
+import * as ACTIONS from './store/actions/actions'
 
 // import * as Reducer1 from './store/reducers/plain_reducer';
-import * as AuthReducer from './store/reducers/auth_reducer';
-import * as FormReducer from './store/reducers/form_reducer';
-import Routes from './Routes';
-
-
+import * as AuthReducer from './store/reducers/auth_reducer'
+import * as FormReducer from './store/reducers/form_reducer'
+import Routes from './Routes'
 
 const ContextState = () => {
   // /*
@@ -15,7 +13,6 @@ const ContextState = () => {
   // */
   // const [stateReducer1, dispatchReducer1] = useReducer(Reducer1.Reducer1,
   //                                                      Reducer1.initialState)
-
 
   // const handleDispatchTrue = () => {
   //   //    dispatchReducer1(type: "SUCCESS")
@@ -32,44 +29,31 @@ const ContextState = () => {
   /*
     Auth Reducer
   */
-  const [stateAuthReducer, dispatchAuthReducer] = useReducer(AuthReducer.AuthReducer,
-    AuthReducer.initialState)
-
-
-  const handleLogin = () => {
-    dispatchAuthReducer(ACTIONS.login_success())
-  }
-
-  const handleLogout = () => {
-    dispatchAuthReducer(ACTIONS.login_failure())
-  }
-
-  const handleAddProfile = (profile) => {
-    dispatchAuthReducer(ACTIONS.add_profile(profile))
-  }
-
-  const handleRemoveProfile = () => {
-    dispatchAuthReducer(ACTIONS.remove_profile())
-  }
-
-
+  const [stateAuthReducer, dispatchAuthReducer] = useReducer(
+    AuthReducer.AuthReducer,
+    AuthReducer.initialState,
+  )
 
   /*
     Form Reducer
   */
 
-  const [stateFormReducer, dispatchFormReducer] = useReducer(FormReducer.FormReducer,
-    FormReducer.initialState)
+  const [stateFormReducer, dispatchFormReducer] = useReducer(
+    FormReducer.FormReducer,
+    FormReducer.initialState,
+  )
 
   const handleFormChange = (event) => {
     dispatchFormReducer(ACTIONS.user_input_change(event.target.value))
-  };
+  }
 
   const handleFormSubmit = (event) => {
-    event.preventDefault();
-    event.persist();
-    dispatchFormReducer(ACTIONS.user_input_submit(event.target.useContext.value))
-  };
+    event.preventDefault()
+    event.persist()
+    dispatchFormReducer(
+      ACTIONS.user_input_submit(event.target.useContext.value),
+    )
+  }
 
   //Handle authentication from callback
   const handleAuthentication = (props) => {
@@ -77,8 +61,6 @@ const ContextState = () => {
       // auth.handleAuth()
     }
   }
-
-
 
   return (
     <Context.Provider
@@ -98,21 +80,14 @@ const ContextState = () => {
         //Auth Reducer
         authState: stateAuthReducer.is_authenticated,
         profileState: stateAuthReducer.profile,
-        handleUserLogin: () => handleLogin(),
-        handleUserLogout: () => handleLogout(),
-        handleUserAddProfile: (profile) => handleAddProfile(profile),
-        handleUserRemoveProfile: () => handleRemoveProfile(),
-
         //Handle auth
         handleAuth: (props) => handleAuthentication(props),
         // authObj: auth
-      }}>
+      }}
+    >
       <Routes />
-
     </Context.Provider>
-
   )
 }
 
-
-export default ContextState;
+export default ContextState

@@ -27,6 +27,7 @@ import { PostAuthor } from '../PostDetails/PostAuthor'
 import { PostTemplate } from '../PostDetails/PostTemplate'
 import { handleErrors } from '../utils/handleErrors'
 import { useFetch } from '../utils/useFetch'
+import { NewPostTab } from './NewPostTab'
 import { ProfileTab } from './ProfileTab'
 
 const Profile = ({ match }) => {
@@ -154,6 +155,7 @@ const Profile = ({ match }) => {
   }
 
   const handleTabsChange = (index) => {
+    console.log(index)
     setTabIndex(index)
   }
 
@@ -187,50 +189,10 @@ const Profile = ({ match }) => {
               <ProfileTab user={user}></ProfileTab>
             </TabPanel>
             <TabPanel>
-              <VStack spacing={2} align="flex-end">
-                <Input
-                  isRequired
-                  id="new-post-title"
-                  value={newPostTitle}
-                  onChange={handleChange}
-                  placeholder="Title of new post"
-                  size="lg"
-                />
-                <Textarea
-                  isRequired
-                  id="new-post-content"
-                  value={newPostContent}
-                  onChange={handleChange}
-                  placeholder="Post content"
-                  size="md"
-                  resize="vertical"
-                  height="200px"
-                />
-                <Button
-                  disabled={!newPostTitle || !newPostContent}
-                  onClick={async () => {
-                    await addPost('/api/posts', newPostData)
-                    refreshPage()
-                    handleTabsChange(3)
-                    // !(process.env.NODE_ENV === 'development') && refreshPage()
-                  }}
-                  // variant="outline"
-                  colorScheme="teal"
-                  aria-label="save"
-                  title="save"
-                  rightIcon={<AddIcon />}
-                >
-                  Add
-                </Button>
-              </VStack>
-              <Divider margin={'2rem 0 2rem 0'} orientation="horizontal" />
-              <Text as="h3">Preview:</Text>
-              <PostTemplate
-                date={new Date()}
-                title={newPostTitle}
-                content={newPostContent}
-                author={user.nickname}
-              />
+              <NewPostTab
+                refresh={refreshPage}
+                handleTabsChange={(index) => handleTabsChange(index)}
+              ></NewPostTab>
             </TabPanel>
             <TabPanel>
               <VStack spacing={2} align="flex-end">
