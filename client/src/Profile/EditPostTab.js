@@ -58,7 +58,7 @@ export const EditPostTab = (props) => {
 
   const editPostData = {
     title: editPostTitle,
-    shortContent: editPostContent.slice(0, 120),
+    shortContent: toString(editPostContent).slice(0, 120),
     longContent: editPostContent,
     author: user.nickname,
   }

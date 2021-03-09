@@ -1,31 +1,15 @@
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react'
-import { AddIcon, DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import {
-  Box,
-  Button,
   Container,
-  Divider,
-  Flex,
-  Heading,
-  IconButton,
-  Input,
-  Spacer,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
   Text,
-  Textarea,
-  VStack,
 } from '@chakra-ui/react'
-import { format } from 'date-fns'
-import React, { useEffect, useState } from 'react'
-import Highlight from '../Highlight'
+import React, { useState } from 'react'
 import LoadingSpinner from '../LoadingSpinner'
-import { PostAuthor } from '../PostDetails/PostAuthor'
-import { PostTemplate } from '../PostDetails/PostTemplate'
-import { handleErrors } from '../utils/handleErrors'
 import { useFetch } from '../utils/useFetch'
 import { EditPostTab } from './EditPostTab'
 import { NewPostTab } from './NewPostTab'
@@ -38,8 +22,6 @@ const Profile = ({ match }) => {
 
   console.log(user.app_metadata)
 
-  const [newPostTitle, setNewPostTitle] = useState('')
-  const [newPostContent, setNewPostContent] = useState('')
   const [editedPost, setEditedPost] = useState({})
   const [editedPostId, setEditedPostId] = useState('')
   const [numberOfUpdates, setNumberOfUpdates] = useState(0)
@@ -52,30 +34,18 @@ const Profile = ({ match }) => {
     handleTabsChange(2)
   }
 
-  const deletePost = async (url) => {
-    const token = await getAccessTokenSilently({
-      audience: 'react-blog-api',
-      scope: 'delete:posts',
-    })
-
-    const response = await fetch(url, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-      referrerPolicy: 'no-referrer',
-    })
-    return response.json()
-  }
   function refreshPage() {
-    console.log('refreshPage here!')
+    // console.log('refreshPage here!')
     setNumberOfUpdates(numberOfUpdates + 1)
+    setEditedPostId('')
   }
 
   const handleTabsChange = (index) => {
-    console.log(index)
+    // console.log(index)
     setTabIndex(index)
+    if (index !== 2) {
+      setEditedPostId('')
+    }
   }
 
   if (error) {
@@ -100,7 +70,12 @@ const Profile = ({ match }) => {
           <TabList>
             <Tab>Profile</Tab>
             <Tab>New post</Tab>
-            <Tab isDisabled={editedPostId === ''}>Edit post</Tab>
+            <Tab
+              isDisabled={editedPostId === ''}
+              _disabled={{ cursor: 'inherit', opacity: '0.4' }}
+            >
+              Edit post
+            </Tab>
             <Tab>Posts list</Tab>
           </TabList>
           <TabPanels>

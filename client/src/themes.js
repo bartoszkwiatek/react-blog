@@ -1,33 +1,38 @@
-import { extendTheme } from "@chakra-ui/react"
-
+import { extendTheme } from '@chakra-ui/react'
 
 const theme = extendTheme({
   components: {
     Container: {
       // 1. We can update the base styles
       baseStyle: {
-        "maxWidth": "80ch", // Normally, it is "semibold"
+        maxWidth: '80ch',
+      },
+    },
+
+    Tab: {
+      _disabled: {
+        color: 'pink',
       },
     },
 
     //following doesnt work:
     Button: {
       baseStyle: {
-        colorScheme: "teal",
+        colorScheme: 'teal',
       },
       focus: {
-        outline: "3px solid pink"
-      }
-    }
+        outline: '3px solid pink',
+      },
+    },
   },
 
   colors: {
     brand: {
-      100: "#f7fafc",
+      100: '#f7fafc',
       // ...
-      900: "#1a202c",
+      900: '#1a202c',
     },
   },
 })
 
-export default theme;
+export default theme
