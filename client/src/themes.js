@@ -15,13 +15,15 @@ const theme = extendTheme({
       },
     },
 
-    //following doesnt work:
     Button: {
       baseStyle: {
         colorScheme: 'teal',
       },
       focus: {
         outline: '3px solid pink',
+      },
+      _disabled: {
+        color: 'pink',
       },
     },
   },
