@@ -1,7 +1,7 @@
 import { Box, Container, Flex, Heading, LinkBox, Text } from '@chakra-ui/react'
 import { format } from 'date-fns'
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useHistory } from 'react-router-dom'
 import LoadingSpinner from '../LoadingSpinner'
 import { PostAuthor } from '../PostDetails/PostAuthor'
 import { useFetch } from '../utils/useFetch'
@@ -9,8 +9,17 @@ import { Pagination } from './Pagination'
 
 const PostsList = ({ match }) => {
   const { isLoaded, items, error } = useFetch('/api/posts')
-  const [pageIndex, setPageIndex] = useState(1)
+  const [pageIndex, setPageIndex] = useState(0)
+  const history = useHistory()
+  console.log(match)
 
+  useEffect(() => {
+    if (match.url === '/') {
+      setPageIndex(0)
+    } else if (match.params.pageNumber !== undefined) {
+      setPageIndex(Number(match.params.pageNumber) - 1)
+    }
+  }, [match])
   const postsOnPage = 4
 
   const splitArray = (inputArray, postsOnPage) => {
@@ -25,6 +34,11 @@ const PostsList = ({ match }) => {
     }, [])
 
     return result
+  }
+
+  const handleClick = (pageIndex) => {
+    // setPageIndex
+    history.push(`/posts/page=${pageIndex + 1}`)
   }
 
   const postPages = splitArray(items, postsOnPage)
@@ -74,7 +88,7 @@ const PostsList = ({ match }) => {
           <Pagination
             numberOfPages={postPages.length}
             currentPage={pageIndex}
-            handleClick={(index) => setPageIndex(index)}
+            handleClick={(index) => handleClick(index)}
           ></Pagination>
         </Container>
       </React.Fragment>

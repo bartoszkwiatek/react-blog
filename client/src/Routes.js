@@ -29,6 +29,7 @@ const Routes = () => {
         <br />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route path="/posts/page=:pageNumber" component={Home}></Route>
           <Route path="/posts/:_id" component={PostDetails}></Route>
           <Route path="/profile" component={Profile} />
           <Route path="/external-api" component={ExternalApi} />
