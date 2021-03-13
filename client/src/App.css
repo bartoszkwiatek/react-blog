@@ -14,12 +14,3 @@
 .result-block-container .result-block {
   opacity: 1;
 }
-
-ul {
-  list-style: none;
-  margin: 0;
-}
-
-p {
-  word-break: break-word;
-}

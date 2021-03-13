@@ -23,10 +23,12 @@ const Header = () => {
     <React.Fragment>
       <Box bg="teal.500" p={2}>
         <Container>
-          <Heading as="h1" size="md">
+          <Heading size="md">
             <Flex align="center">
               <Link to="/" color="white">
-                <Text color="white">Greatest react blog ever.</Text>
+                <Text as="h1" color="white">
+                  Greatest react blog ever.
+                </Text>
               </Link>
               <Divider
                 marginLeft={4}

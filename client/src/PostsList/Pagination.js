@@ -1,8 +1,11 @@
 import { Button, ButtonGroup, IconButton } from '@chakra-ui/button'
+import theme from '@chakra-ui/theme'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React from 'react'
+import React, { useContext } from 'react'
 
 export const Pagination = (props) => {
+  // const styles = useContext()
+  // console.log(styles)
   const lastPage = props.numberOfPages - 1
   const currentPage = props.currentPage
 
@@ -38,6 +41,7 @@ export const Pagination = (props) => {
     <ButtonGroup>
       <IconButton
         isDisabled={currentPage === 0}
+        colorScheme="gray"
         onClick={() => props.handleClick(0)}
         id="first"
         icon={<FontAwesomeIcon icon="angle-double-left" className="mr-3" />}
@@ -45,6 +49,7 @@ export const Pagination = (props) => {
       <IconButton
         isDisabled={currentPage === 0}
         onClick={() => props.handleClick(currentPage - 1)}
+        colorScheme="gray"
         id="previous"
         icon={<FontAwesomeIcon icon="angle-left" className="mr-3" />}
       ></IconButton>
@@ -52,7 +57,7 @@ export const Pagination = (props) => {
         return (
           <Button
             key={key}
-            colorScheme={pageNumber === currentPage + 1 ? 'teal' : 'gray'}
+            colorScheme={pageNumber === currentPage + 1 ? null : 'gray'}
             onClick={() => props.handleClick(pageNumber - 1)}
           >
             {pageNumber}
@@ -62,12 +67,14 @@ export const Pagination = (props) => {
       <IconButton
         onClick={() => props.handleClick(currentPage + 1)}
         isDisabled={currentPage === lastPage}
+        colorScheme="gray"
         id="next"
         icon={<FontAwesomeIcon icon="angle-right" className="mr-3" />}
       ></IconButton>
       <IconButton
         isDisabled={currentPage === lastPage}
         onClick={() => props.handleClick(lastPage)}
+        colorScheme="gray"
         id="last"
         icon={<FontAwesomeIcon icon="angle-double-right" className="mr-3" />}
       ></IconButton>

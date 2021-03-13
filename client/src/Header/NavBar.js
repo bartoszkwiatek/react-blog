@@ -42,26 +42,18 @@ const NavBar = () => {
   return (
     <nav>
       <HStack spacing="4">
-        <Link to="/" activeclassname="router-link-exact-active">
-          <Button colorScheme="teal" size="lg">
-            Home
-          </Button>
+        <Link to="/">
+          <Button size="lg">Home</Button>
         </Link>
         <Link to="/profile">
-          <Button colorScheme="teal" size="lg">
-            Profile
-          </Button>
+          <Button size="lg">Profile</Button>
         </Link>
         {isAuthenticated && (
           // <Link
           // to="/external-api"
           // activeclassname="router-link-exact-active"
           // >
-          <Button
-            colorScheme="teal"
-            size="lg"
-            onClick={() => console.log(externalApi())}
-          >
+          <Button size="lg" onClick={() => console.log(externalApi())}>
             External API
           </Button>
           // </Link>

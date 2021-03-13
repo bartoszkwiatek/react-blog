@@ -57,14 +57,8 @@ const PostsList = ({ match }) => {
       <React.Fragment>
         <ul>
           {postPages[pageIndex].map((item) => (
-            <Link to={`${match.url}posts/${item._id}`} key={item._id}>
-              <LinkBox
-                as="article"
-                p="5"
-                marginBottom="5"
-                borderWidth="1px"
-                rounded="md"
-              >
+            <Link to={`/posts/${item._id}`} key={item._id}>
+              <LinkBox as="article">
                 <Flex justifyContent="space-between">
                   <Box as="time" size="sm" dateTime={item.createdAt}>
                     {format(new Date(item.createdAt), 'dd.MM.yyyy HH:mm')}
