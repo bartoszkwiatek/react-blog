@@ -1,12 +1,13 @@
 import { Box, Divider, Flex, Heading, Spacer, Text } from '@chakra-ui/react'
 import { format } from 'date-fns'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import React from 'react'
 import { PostAuthor } from './PostAuthor'
 
 export const PostTemplate = (props) => {
+  const history = useHistory()
   return (
-    <Box as="article" p="5" marginBottom="5" borderWidth="1px" rounded="md">
+    <Box as="article">
       <Flex justifyContent="space-between">
         <Box as="time" dateTime={props.date}>
           {format(new Date(props.date), 'dd.MM.yyyy HH:mm')}
@@ -22,7 +23,7 @@ export const PostTemplate = (props) => {
       ></Text>
       <br></br>
       <Divider width="36%"></Divider>
-      <Link to={`/`}>
+      <Link onClick={() => history.goBack()}>
         <b>Back</b>
       </Link>
     </Box>
