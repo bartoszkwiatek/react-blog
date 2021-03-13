@@ -71,6 +71,7 @@ export const NewPostTab = (props) => {
           onChange={handleChange}
           placeholder="Title of new post"
           size="lg"
+          backgroundColor="white"
         />
         <Textarea
           isRequired
@@ -81,6 +82,7 @@ export const NewPostTab = (props) => {
           size="md"
           resize="vertical"
           height="200px"
+          backgroundColor="white"
         />
         <Button
           disabled={!newPostTitle || !newPostContent}

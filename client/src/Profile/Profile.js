@@ -18,9 +18,8 @@ import { ProfileTab } from './ProfileTab'
 
 const Profile = ({ match }) => {
   const { user, getAccessTokenSilently } = useAuth0()
-  // console.log(user)
 
-  console.log(user.app_metadata)
+  // console.log(user.app_metadata)
 
   const [editedPost, setEditedPost] = useState({})
   const [editedPostId, setEditedPostId] = useState('')
@@ -63,7 +62,7 @@ const Profile = ({ match }) => {
         <Tabs
           index={tabIndex}
           onChange={handleTabsChange}
-          variant="line"
+          variant="soft-rounded"
           colorScheme="teal"
           isLazy
         >

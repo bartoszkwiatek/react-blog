@@ -10,12 +10,14 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { format } from 'date-fns'
-import React from 'react'
+import React, { useState } from 'react'
 import { PostAuthor } from '../PostDetails/PostAuthor'
+import { DeleteDialog } from './DeleteDialog'
 
 export const PostListTab = (props) => {
   const { user, getAccessTokenSilently } = useAuth0()
   const items = props.items
+  const [deletePostId, setDeletePostId] = useState('')
 
   const deletePost = async (url) => {
     const token = await getAccessTokenSilently({
@@ -45,6 +47,12 @@ export const PostListTab = (props) => {
     props.handleEditButton(item)
   }
 
+  const handleDelete = async (id) => {
+    await deletePost(`api/posts/${id}`)
+    refreshPage()
+    handleTabsChange(3)
+  }
+
   return (
     <React.Fragment>
       <ul>
@@ -52,10 +60,9 @@ export const PostListTab = (props) => {
           <Box
             key={item._id}
             as="article"
-            p="5"
-            marginBottom="5"
-            borderWidth="1px"
-            rounded="md"
+
+            // borderWidth="1px"
+            // rounded="md"
           >
             <Flex
             // align="center"
@@ -94,13 +101,8 @@ export const PostListTab = (props) => {
                   title="edit"
                   icon={<EditIcon />}
                 />
-                {/* <Spacer /> */}
                 <IconButton
-                  onClick={async () => {
-                    await deletePost(`api/posts/${item._id}`)
-                    refreshPage()
-                    handleTabsChange(3)
-                  }}
+                  onClick={() => setDeletePostId(item._id)}
                   colorScheme="red"
                   aria-label="delete"
                   title="delete"
@@ -111,6 +113,11 @@ export const PostListTab = (props) => {
           </Box>
         ))}
       </ul>
+      <DeleteDialog
+        isOpen={deletePostId}
+        onClose={() => setDeletePostId('')}
+        confirmation={(id) => handleDelete(id)}
+      />
     </React.Fragment>
   )
 }
