@@ -23,9 +23,9 @@ export const PostTemplate = (props) => {
       ></Text>
       <br></br>
       <Divider width="36%"></Divider>
-      <Link onClick={() => history.goBack()}>
+      <Text as="Button" onClick={() => history.goBack()}>
         <b>Back</b>
-      </Link>
+      </Text>
     </Box>
   )
 }
