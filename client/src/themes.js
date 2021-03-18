@@ -12,6 +12,11 @@ const theme = extendTheme({
       body: {
         bg: 'gray.50',
       },
+
+      img: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      },
       article: {
         bg: 'white',
         rounded: 'md',
